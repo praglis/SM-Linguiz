@@ -7,16 +7,14 @@ import androidx.annotation.RequiresApi;
 import com.example.sm_linguiz.database.Word;
 import com.example.sm_linguiz.model.proxy.DictionaryProxy;
 
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class Progress {
     private static final Progress instance = new Progress();
-    Level[] levels;
-    int accessedWordNumber;
+    private Level[] levels;
+    private int accessedWordNumber;
 
     private Progress() {
         levels = new Level[]{
@@ -60,15 +58,15 @@ public class Progress {
         return Progress.instance;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void initializeProgress() {
-        for (Level level : levels) {
-            DictionaryProxy dictionaryProxy = new DictionaryProxy(level);
-            for (Word word : dictionaryProxy.getWordList()) {
-                updateProgressLevel(level, word, 0);
-            }
-        }
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+//    private void initializeProgress() {
+//        for (Level level : levels) {
+//            DictionaryProxy dictionaryProxy = new DictionaryProxy(level);
+//            for (Word word : dictionaryProxy.getWordList()) {
+//                updateProgressLevel(level, word, 0);
+//            }
+//        }
+//    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void updateProgressLevel(Level level, Word word, int value) {
@@ -122,27 +120,15 @@ public class Progress {
 //            }
 //        }
 //        scanner.close();
-//    }//todo
 
 
     public Word getWeakestWord(DictionaryProxy dictionaryProxy, boolean firstWord) {
         if (firstWord) accessedWordNumber = 0;
         else accessedWordNumber++;
 
+        List<Word> wordList = new LinkedList<>(dictionaryProxy.getWordList());
+        Collections.sort(wordList);
 
-        Set<Map.Entry<Word, Integer>> entrySet = levels[level.toInteger()].map.entrySet();
-        List<Map.Entry<Word, Integer>> entryList = new ArrayList<Map.Entry<Word, Integer>>(entrySet);
-
-
-        entryList.sort(new Comparator<Map.Entry<Word, Integer>>() {
-            @Override
-            public int compare(Map.Entry<Word, Integer> wordIntegerEntry, Map.Entry<Word, Integer> t1) {
-                if (wordIntegerEntry.getValue().intValue() > t1.getValue().intValue()) return 1;
-                else if (wordIntegerEntry.getValue().intValue() < t1.getValue().intValue()) return -1;
-                else return 0;
-            }
-        });
-        Map.Entry<Word, Integer> entry = entryList.get(accessedWordNumber % entryList.size());
-        return entry.getKey();
+        return wordList.get(accessedWordNumber % wordList.size());
     }
 }

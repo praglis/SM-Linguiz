@@ -10,7 +10,7 @@ import com.example.sm_linguiz.model.question.Question;
 import java.util.Random;
 
 public class LearnQuizBuilder extends QuizBuilder {
-    boolean firstQuestion;
+    private boolean firstQuestion;
 
     public LearnQuizBuilder(DictionaryProxy dictionaryProxy, Progress progress) {
         super(dictionaryProxy);
@@ -34,7 +34,7 @@ public class LearnQuizBuilder extends QuizBuilder {
         Word weakestWord;
 
         do {
-            weakestWord = progress.getWeakestWord(this.dictionaryProxy.getLevel(), firstQuestion);
+            weakestWord = progress.getWeakestWord(this.dictionaryProxy, firstQuestion);
             firstQuestion = false;
         } while (isWordInQuiestions(weakestWord));
 

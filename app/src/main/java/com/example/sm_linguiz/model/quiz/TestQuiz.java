@@ -6,10 +6,10 @@ import com.example.sm_linguiz.model.proxy.DictionaryProxy;
 public class TestQuiz extends Quiz {
     private int score;
 
-    public TestQuiz(DictionaryProxy dictionaryProxy) {
+    public TestQuiz(DictionaryProxy dictionaryProxy, int questionCount) {
         super(dictionaryProxy);
         score = 0;
-
+        // todo use question count
         TestQuizBuilder testQuizBuilder = new TestQuizBuilder(this.dictionaryProxy);
         testQuizBuilder.createQuestions();
         this.questions = testQuizBuilder.getQuestions();

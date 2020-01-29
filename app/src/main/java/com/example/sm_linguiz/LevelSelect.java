@@ -11,10 +11,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.sm_linguiz.database.DictionaryViewModel;
 import com.example.sm_linguiz.database.Word;
-import com.example.sm_linguiz.model.progress.Level;
 import com.example.sm_linguiz.model.proxy.DictionaryProxy;
-import com.example.sm_linguiz.model.proxy.DictionaryViewModel;
 import com.example.sm_linguiz.model.quiz.LearnQuiz;
 import com.example.sm_linguiz.model.quiz.Quiz;
 import com.example.sm_linguiz.model.quiz.TestQuiz;
@@ -66,20 +65,19 @@ public class LevelSelect extends AppCompatActivity {
                 public void onClick(View view) {
 
                     String selectedLevel = (String) ((Button) view).getText();
-                    Level level = new Level(selectedLevel);
                     Quiz quiz;
 
                     boolean learnOrTest = getIntent().getBooleanExtra(LEARN_OR_TEST, true);
 
                     dictionaryViewModel = ViewModelProviders.of((FragmentActivity) getParent()).get(DictionaryViewModel.class);
-                    dictionaryViewModel.findAll().observe((FragmentActivity) getParent(), new Observer<List<Word>>() {
+                    dictionaryViewModel.findAllByLevel(selectedLevel).observe((FragmentActivity) getParent(), new Observer<List<Word>>() {
                         @Override
                         public void onChanged(@Nullable final List<Word> words) {
                             wordList = words;
                         }
                     });
 
-                    DictionaryProxy dictionaryProxy = new DictionaryProxy(level, wordList);
+                    DictionaryProxy dictionaryProxy = new DictionaryProxy(selectedLevel, wordList);
 
                     if (learnOrTest) {
                         quiz = new LearnQuiz(dictionaryProxy, QUESTION_COUNT);
@@ -88,7 +86,7 @@ public class LevelSelect extends AppCompatActivity {
                     }
 
                     Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
-                    intent.putExtra(SELECTED_LEVEL, level);
+                    intent.putExtra(SELECTED_LEVEL, selectedLevel); // todo necessary?
                     intent.putExtra(QUIZ, quiz);
                     startActivityForResult(intent, 1);
                 }
