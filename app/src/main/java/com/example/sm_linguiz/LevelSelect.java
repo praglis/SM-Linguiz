@@ -36,6 +36,7 @@ public class LevelSelect extends AppCompatActivity {
     private DictionaryProxy dictionaryProxy;
     private static final int QUESTION_COUNT = 10;
     private Context context;
+    boolean isDataLoaded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +74,22 @@ public class LevelSelect extends AppCompatActivity {
 
                     boolean learnOrTest = getIntent().getBooleanExtra(LEARN_OR_TEST, true);
 
+                    isDataLoaded = false;
                     dictionaryViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(DictionaryViewModel.class);
                     dictionaryViewModel.findAllByLevel(selectedLevel).observe((LifecycleOwner) context, new Observer<List<Word>>() {
                         @Override
                         public void onChanged(@Nullable final List<Word> words) {
                             dictionaryProxy = new DictionaryProxy(selectedLevel, words);
+                            isDataLoaded = true;
                         }
                     });
+
+                    while (!isDataLoaded) {
+                        try {
+                            Thread.sleep(250);
+                        } catch (InterruptedException ignore) {
+                        }
+                    }
 
                     if (learnOrTest) {
                         quiz = new LearnQuiz(dictionaryProxy, QUESTION_COUNT);
