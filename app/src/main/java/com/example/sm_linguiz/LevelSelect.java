@@ -1,5 +1,6 @@
 package com.example.sm_linguiz;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,9 +8,10 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.example.sm_linguiz.database.DictionaryViewModel;
 import com.example.sm_linguiz.database.Word;
@@ -31,14 +33,16 @@ public class LevelSelect extends AppCompatActivity {
     private Button backButton;
     private Button[] levelButtons;
     private DictionaryViewModel dictionaryViewModel;
-    private List<Word> wordList;
+    private DictionaryProxy dictionaryProxy;
     private static final int QUESTION_COUNT = 10;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_select);
 
+        context = this;
 
         backButton = findViewById(R.id.back_button);
 
@@ -69,15 +73,13 @@ public class LevelSelect extends AppCompatActivity {
 
                     boolean learnOrTest = getIntent().getBooleanExtra(LEARN_OR_TEST, true);
 
-                    dictionaryViewModel = ViewModelProviders.of((FragmentActivity) getParent()).get(DictionaryViewModel.class);
-                    dictionaryViewModel.findAllByLevel(selectedLevel).observe((FragmentActivity) getParent(), new Observer<List<Word>>() {
+                    dictionaryViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(DictionaryViewModel.class);
+                    dictionaryViewModel.findAllByLevel(selectedLevel).observe((LifecycleOwner) context, new Observer<List<Word>>() {
                         @Override
                         public void onChanged(@Nullable final List<Word> words) {
-                            wordList = words;
+                            dictionaryProxy = new DictionaryProxy(selectedLevel, words);
                         }
                     });
-
-                    DictionaryProxy dictionaryProxy = new DictionaryProxy(selectedLevel, wordList);
 
                     if (learnOrTest) {
                         quiz = new LearnQuiz(dictionaryProxy, QUESTION_COUNT);
