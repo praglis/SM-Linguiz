@@ -16,4 +16,7 @@
     <string name="correct_answer">Correct!</string>
     <string name="incorrect_answer">Unfortunately, the correct answer is: </string>
     <string name="next_button">Next</string>
+    <string name="overall_result">Number of correct answers:</string>
+    <string name="result_icon_desc">icon</string>
+    <string name="your_answer">Your answer:</string>
 </resources>

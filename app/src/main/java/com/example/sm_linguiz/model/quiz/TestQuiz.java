@@ -1,9 +1,12 @@
 package com.example.sm_linguiz.model.quiz;
 
+import com.example.sm_linguiz.database.Word;
 import com.example.sm_linguiz.model.builder.TestQuizBuilder;
 import com.example.sm_linguiz.model.proxy.DictionaryProxy;
+import com.example.sm_linguiz.model.question.Question;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class TestQuiz extends Quiz {
     private int score;
@@ -53,6 +56,11 @@ public class TestQuiz extends Quiz {
 //
 //    } //todo
 
+
+    public boolean[] getAnswerCorrectness() {
+        return answerCorrectness;
+    }
+
     public int getScore() {
         return score;
     }
@@ -67,5 +75,15 @@ public class TestQuiz extends Quiz {
 
     public void markCurrentQuestionCorrectness(boolean isCorrect) {
         answerCorrectness[this.getCurrentQuestionNumber()] = isCorrect;
+    }
+
+    public List<Word> getWords() {
+        List<Word> words = new LinkedList<>();
+
+        for (Question question : this.questions) {
+            words.add(question.getCorrectWord());
+        }
+
+        return words;
     }
 }
