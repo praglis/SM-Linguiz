@@ -103,17 +103,21 @@ public class LevelSelect extends AppCompatActivity {
 
                             if (learnOrTest) {
                                 quiz = new LearnQuiz(dictionaryProxy, QUESTION_COUNT);
+                                if (!isQuestionLoaded) {
+                                    isQuestionLoaded = true;
+                                    Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
+                                    intent.putExtra(QUIZ, quiz);
+                                    startActivity(intent);
+                                }
                             } else {
                                 quiz = new TestQuiz(dictionaryProxy, QUESTION_COUNT);
+                                if (!isQuestionLoaded) {
+                                    isQuestionLoaded = true;
+                                    Intent intent = new Intent(LevelSelect.this, TestQuestionActivity.class);
+                                    intent.putExtra(QUIZ, quiz);
+                                    startActivity(intent);
+                                }
                             }
-
-                            if (!isQuestionLoaded) {
-                                isQuestionLoaded = true;
-                                Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
-                                intent.putExtra(QUIZ, quiz);
-                                startActivityForResult(intent, 1);
-                            }
-
                         }
                     });
                 }
@@ -122,24 +126,24 @@ public class LevelSelect extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        isDataLoaded = true;
-        boolean isAnswerCorrect = getIntent().getBooleanExtra(IS_ANSWER_CORRECT, false);
-        if (isAnswerCorrect) {
-
-        } else {
-
-        }
-        quiz.nextQuestion();
-        if (quiz.getCurrentQuestionNumber() >= quiz.getQuestions().size()) {
-            Intent intent = new Intent(LevelSelect.this, MainActivity.class);
-            startActivity(intent);
-        }
-
-        Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
-        intent.putExtra(QUIZ, quiz);
-        startActivityForResult(intent, 1);
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        isDataLoaded = true;
+//        boolean isAnswerCorrect = getIntent().getBooleanExtra(IS_ANSWER_CORRECT, false);
+//        if (isAnswerCorrect) {
+//
+//        } else {
+//
+//        }
+//        quiz.nextQuestion();
+//        if (quiz.getCurrentQuestionNumber() >= quiz.getQuestions().size()) {
+//            Intent intent = new Intent(LevelSelect.this, MainActivity.class);
+//            startActivity(intent);
+//        }
+//
+//        Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
+//        intent.putExtra(QUIZ, quiz);
+//        startActivityForResult(intent, 1);
+//    }
 }
