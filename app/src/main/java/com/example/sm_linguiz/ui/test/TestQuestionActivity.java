@@ -9,8 +9,10 @@ import android.widget.Button;
 import com.example.sm_linguiz.R;
 import com.example.sm_linguiz.model.question.ClosedQuestion;
 import com.example.sm_linguiz.model.quiz.TestQuiz;
-import com.example.sm_linguiz.ui.MainActivity;
 import com.example.sm_linguiz.ui.QuestionActivity;
+import com.example.sm_linguiz.ui.TestResultActivity;
+
+import static com.example.sm_linguiz.ui.LevelSelect.QUIZ;
 
 public class TestQuestionActivity extends QuestionActivity {
 
@@ -51,14 +53,18 @@ public class TestQuestionActivity extends QuestionActivity {
                 public void onClick(View view) {
                     Log.d("TestQuestionActivity", "setQuestion->onClick");
 
+                    quiz.setCurrentQuestionUserAnswer((String) ((Button) view).getText());
 
-                    ((TestQuiz) quiz).markCurrentQuestionCorrectness(isAnswerCorrect(view, quiz));
-
+                    if (isAnswerCorrect(view, quiz)) {
+                        ((TestQuiz) quiz).markCurrentQuestionCorrectness(true);
+                        ((TestQuiz) quiz).incrementScore(1);
+                    }
 
                     quiz.nextQuestion();
 
                     if (quiz.getCurrentQuestionNumber() >= quiz.getQuestions().size() - 1) {
-                        Intent intent = new Intent(TestQuestionActivity.this, MainActivity.class);
+                        Intent intent = new Intent(TestQuestionActivity.this, TestResultActivity.class);
+                        intent.putExtra(QUIZ, quiz);
                         startActivity(intent);
                     }
 
