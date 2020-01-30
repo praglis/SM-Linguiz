@@ -22,6 +22,7 @@ public class LearnQuestionActivity extends QuestionActivity {
     Button nextButton;
 
     Intent replyIntent;
+    boolean hasUserAnswered;
 
 
     Quiz quiz;
@@ -33,6 +34,8 @@ public class LearnQuestionActivity extends QuestionActivity {
         Log.d("superDebugowanie", "onCreate");
 
         this.quiz = (Quiz) getIntent().getSerializableExtra(QUIZ);
+        hasUserAnswered = false;
+        replyIntent = new Intent();
 
         questionText = findViewById(R.id.learn_question_text);
         responseText = findViewById(R.id.learn_question_response);
@@ -57,7 +60,7 @@ public class LearnQuestionActivity extends QuestionActivity {
             answerButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    replyIntent = new Intent();
+                    hasUserAnswered = true;
 
                     if (isAnswerCorrect(view, quiz)) {
                         replyIntent.putExtra(IS_ANSWER_CORRECT, true);
@@ -69,7 +72,8 @@ public class LearnQuestionActivity extends QuestionActivity {
                         replyIntent.putExtra(IS_ANSWER_CORRECT, false);
                         setResult(RESULT_OK, replyIntent);
 
-                        responseText.setText(R.string.incorrect_answer);
+                        String message = getString(R.string.incorrect_answer) + quiz.getCurrentQuestion().getCorrectAnswer();
+                        responseText.setText(message);
                     }
                 }
             });
@@ -78,6 +82,14 @@ public class LearnQuestionActivity extends QuestionActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                if (!hasUserAnswered) {
+//                    replyIntent.putExtra(IS_ANSWER_CORRECT, false);
+//                    setResult(RESULT_OK, replyIntent);
+//
+//                    String message = getString(R.string.incorrect_answer) + quiz.getCurrentQuestion().getCorrectAnswer();
+//                    responseText.setText(message);
+//                }
+
                 replyIntent.putExtra(QUIZ, quiz);
                 finish();
             }

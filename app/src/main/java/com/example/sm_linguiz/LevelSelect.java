@@ -133,9 +133,10 @@ public class LevelSelect extends AppCompatActivity {
 
         }
         quiz.nextQuestion();
-//        if(quiz.getCurrentQuestionNumber() >= quiz.getQuestions().size()){
-//            Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
-//        }
+        if (quiz.getCurrentQuestionNumber() >= quiz.getQuestions().size()) {
+            Intent intent = new Intent(LevelSelect.this, MainActivity.class);
+            startActivity(intent);
+        }
 
         Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
         intent.putExtra(QUIZ, quiz);
