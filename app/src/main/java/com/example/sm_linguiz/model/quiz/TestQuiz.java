@@ -3,16 +3,20 @@ package com.example.sm_linguiz.model.quiz;
 import com.example.sm_linguiz.model.builder.TestQuizBuilder;
 import com.example.sm_linguiz.model.proxy.DictionaryProxy;
 
+import java.util.LinkedList;
+
 public class TestQuiz extends Quiz {
     private int score;
+    private boolean[] answerCorrectness;// todo use dis
 
     public TestQuiz(DictionaryProxy dictionaryProxy, int questionCount) {
         super(dictionaryProxy);
         score = 0;
-        // todo use question count
+
         TestQuizBuilder testQuizBuilder = new TestQuizBuilder(this.dictionaryProxy);
-        testQuizBuilder.createQuestions();
-        this.questions = testQuizBuilder.getQuestions();
+        testQuizBuilder.createQuestions(questionCount);
+        this.questions = new LinkedList<>(testQuizBuilder.getQuestions());
+        answerCorrectness = new boolean[questionCount];
     }
 
 //    public void updateScore() throws FileNotFoundException {
@@ -59,5 +63,9 @@ public class TestQuiz extends Quiz {
 
     public void incrementScore(int value) {
         score += value;
+    }
+
+    public void markCurrentQuestionCorrectness(boolean isCorrect) {
+        answerCorrectness[this.getCurrentQuestionNumber()] = isCorrect;
     }
 }

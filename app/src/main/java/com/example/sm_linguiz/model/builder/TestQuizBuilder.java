@@ -2,7 +2,6 @@ package com.example.sm_linguiz.model.builder;
 
 import com.example.sm_linguiz.model.proxy.DictionaryProxy;
 import com.example.sm_linguiz.model.question.ClosedQuestion;
-import com.example.sm_linguiz.model.question.OpenedQuestion;
 import com.example.sm_linguiz.model.question.Question;
 
 import java.util.Random;
@@ -14,8 +13,7 @@ public class TestQuizBuilder extends QuizBuilder {
     }
 
     @Override
-    public void createQuestions() {
-        int questionCount = 10;
+    public void createQuestions(int questionCount) {
         for (int i = 0; i < questionCount; i++) {
             createQuestion();
         }
@@ -26,12 +24,12 @@ public class TestQuizBuilder extends QuizBuilder {
         Question question;
         Random random = new Random();
         boolean englishOrPolish = random.nextBoolean();
-        boolean openedOrClosed = random.nextBoolean();
-        if (openedOrClosed) {
-            question = new OpenedQuestion(dictionaryProxy.getRandomWord(), englishOrPolish);
-        } else {
-            question = new ClosedQuestion(dictionaryProxy.getRandomWord(), dictionaryProxy.getRandomWords(3), englishOrPolish);
-        }
+//        boolean openedOrClosed = random.nextBoolean();
+//        if (openedOrClosed) {// todo dodać otwarte pytania
+//            question = new OpenedQuestion(dictionaryProxy.getRandomWord(), englishOrPolish);
+//        } else {
+        question = new ClosedQuestion(dictionaryProxy.getRandomWord(), dictionaryProxy.getRandomWords(3), englishOrPolish);
+//        }
         questions.add(question);
     }
 

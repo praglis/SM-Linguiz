@@ -17,8 +17,7 @@ public class LearnQuizBuilder extends QuizBuilder {
     }
 
     @Override
-    public void createQuestions() {//todo quesitnd aount
-        int questionCount = 20;
+    public void createQuestions(int questionCount) {
         for (int i = 0; i < questionCount; i++) {
             createQuestion();
         }

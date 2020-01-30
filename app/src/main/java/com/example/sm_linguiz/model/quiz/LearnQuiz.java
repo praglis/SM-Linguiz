@@ -5,13 +5,14 @@ import com.example.sm_linguiz.model.progress.Progress;
 import com.example.sm_linguiz.model.proxy.DictionaryProxy;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 
 public class LearnQuiz extends Quiz implements Serializable {
     public LearnQuiz(DictionaryProxy dictionaryProxy, int questionsCount) {
         super(dictionaryProxy);
 
         LearnQuizBuilder learnQuizBuilder = new LearnQuizBuilder(this.dictionaryProxy, Progress.getInstance());
-        learnQuizBuilder.createQuestions();
-        this.questions = learnQuizBuilder.getQuestions();
+        learnQuizBuilder.createQuestions(questionsCount);
+        this.questions = new LinkedList<>(learnQuizBuilder.getQuestions());
     }
 }
