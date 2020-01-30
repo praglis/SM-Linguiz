@@ -12,9 +12,9 @@ public class DictionaryProxy implements Serializable {
     private String level;
     private List<Word> wordList;
 
-    public DictionaryProxy(String level, List<Word> wordList) {
+    public DictionaryProxy(String level) {
         this.level = level;
-        this.wordList = new LinkedList<>(wordList);
+        this.wordList = new LinkedList<>();
     }
 
     public List<Word> getWordList() {
@@ -43,6 +43,10 @@ public class DictionaryProxy implements Serializable {
             randomWords[j] = this.getRandomWord();
         }
         return randomWords;
+    }
+
+    public void updateWordList(List<Word> wordList){
+        this.wordList.addAll(wordList);
     }
 
 //    public Iterator<Word> iterator(){

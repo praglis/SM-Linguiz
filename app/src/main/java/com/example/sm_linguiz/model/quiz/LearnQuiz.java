@@ -4,7 +4,9 @@ import com.example.sm_linguiz.model.builder.LearnQuizBuilder;
 import com.example.sm_linguiz.model.progress.Progress;
 import com.example.sm_linguiz.model.proxy.DictionaryProxy;
 
-public class LearnQuiz extends Quiz {
+import java.io.Serializable;
+
+public class LearnQuiz extends Quiz implements Serializable {
     public LearnQuiz(DictionaryProxy dictionaryProxy, int questionsCount) {
         super(dictionaryProxy);
 

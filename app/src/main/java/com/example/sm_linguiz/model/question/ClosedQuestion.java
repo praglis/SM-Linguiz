@@ -2,9 +2,10 @@ package com.example.sm_linguiz.model.question;
 
 import com.example.sm_linguiz.database.Word;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class ClosedQuestion extends Question {
+public class ClosedQuestion extends Question implements Serializable {
     private Word[] incorrectAnswers;
     private int answerCount;
 

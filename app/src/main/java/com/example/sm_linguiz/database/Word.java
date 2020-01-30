@@ -3,8 +3,10 @@ package com.example.sm_linguiz.database;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "word")
-public class Word implements Comparable<Word> {
+public class Word implements Comparable<Word>, Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String englishWord;

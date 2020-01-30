@@ -2,7 +2,9 @@ package com.example.sm_linguiz.model.question;
 
 import com.example.sm_linguiz.database.Word;
 
-public abstract class Question {
+import java.io.Serializable;
+
+public abstract class Question implements Serializable {
     protected Word correctAnswer;
     protected boolean englishToPolish;
 

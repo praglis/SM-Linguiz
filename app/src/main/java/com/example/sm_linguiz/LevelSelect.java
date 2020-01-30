@@ -36,7 +36,8 @@ public class LevelSelect extends AppCompatActivity {
     private DictionaryProxy dictionaryProxy;
     private static final int QUESTION_COUNT = 10;
     private Context context;
-    boolean isDataLoaded;
+    volatile boolean isDataLoaded;
+    Quiz quiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,37 +71,37 @@ public class LevelSelect extends AppCompatActivity {
                 public void onClick(View view) {
 
                     String selectedLevel = (String) ((Button) view).getText();
-                    Quiz quiz;
+
 
                     boolean learnOrTest = getIntent().getBooleanExtra(LEARN_OR_TEST, true);
+                    dictionaryProxy = new DictionaryProxy(selectedLevel);
 
-                    isDataLoaded = false;
                     dictionaryViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(DictionaryViewModel.class);
                     dictionaryViewModel.findAllByLevel(selectedLevel).observe((LifecycleOwner) context, new Observer<List<Word>>() {
                         @Override
                         public void onChanged(@Nullable final List<Word> words) {
-                            dictionaryProxy = new DictionaryProxy(selectedLevel, words);
-                            isDataLoaded = true;
+                            dictionaryProxy.updateWordList(words);
+                            if (dictionaryProxy.getWordList().size() < 250) return;//todo ok number?
+                            if (learnOrTest) {
+                                quiz = new LearnQuiz(dictionaryProxy, QUESTION_COUNT);
+                            } else {
+                                quiz = new TestQuiz(dictionaryProxy, QUESTION_COUNT);
+                            }
+                            Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
+                            intent.putExtra(SELECTED_LEVEL, selectedLevel); // todo necessary?
+                            intent.putExtra(QUIZ, quiz);
+                            startActivityForResult(intent, 1);
                         }
                     });
 
-                    while (!isDataLoaded) {
-                        try {
-                            Thread.sleep(250);
-                        } catch (InterruptedException ignore) {
-                        }
-                    }
+//                    while (!isDataLoaded) {
+//                        try {
+//                            Thread.sleep(250);
+//                        } catch (InterruptedException ignore) {
+//                        }
+//                    }
 
-                    if (learnOrTest) {
-                        quiz = new LearnQuiz(dictionaryProxy, QUESTION_COUNT);
-                    } else {
-                        quiz = new TestQuiz(dictionaryProxy, QUESTION_COUNT);
-                    }
 
-                    Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
-                    intent.putExtra(SELECTED_LEVEL, selectedLevel); // todo necessary?
-                    intent.putExtra(QUIZ, quiz);
-                    startActivityForResult(intent, 1);
                 }
             });
         }
@@ -117,5 +118,7 @@ public class LevelSelect extends AppCompatActivity {
         } else {
 
         }
+        quiz.nextQuestion();
+
     }
 }
