@@ -7,41 +7,29 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.sm_linguiz.MainActivity;
-import com.example.sm_linguiz.QuestionActivity;
 import com.example.sm_linguiz.R;
 import com.example.sm_linguiz.model.question.ClosedQuestion;
-import com.example.sm_linguiz.model.quiz.Quiz;
-
-import static com.example.sm_linguiz.LevelSelect.IS_ANSWER_CORRECT;
-import static com.example.sm_linguiz.LevelSelect.QUIZ;
+import com.example.sm_linguiz.ui.MainActivity;
+import com.example.sm_linguiz.ui.QuestionActivity;
 
 public class LearnQuestionActivity extends QuestionActivity {
-    TextView questionText;
     TextView responseText;
-    Button[] answers;
     Button nextButton;
 
-    Intent replyIntent;
     boolean hasUserAnswered;
-
-
-    Quiz quiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_learn_question);
-        Log.d("superDebugowanie", "onCreate");
+        Log.d("LearnQuestionActivity", "onCreate");
 
-        this.quiz = (Quiz) getIntent().getSerializableExtra(QUIZ);
+        setContentView(R.layout.activity_learn_question);
+
         hasUserAnswered = false;
-        replyIntent = new Intent();
 
         questionText = findViewById(R.id.learn_question_text);
         responseText = findViewById(R.id.learn_question_response);
         nextButton = findViewById(R.id.learn_next);
-
 
         answers = new Button[]{
                 findViewById(R.id.learn_answer_a),
@@ -55,13 +43,6 @@ public class LearnQuestionActivity extends QuestionActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (!hasUserAnswered) {
-//                    replyIntent.putExtra(IS_ANSWER_CORRECT, false);
-//                    setResult(RESULT_OK, replyIntent);
-//
-//                    String message = getString(R.string.incorrect_answer) + quiz.getCurrentQuestion().getCorrectAnswer();
-//                    responseText.setText(message);
-//                }
 
                 quiz.nextQuestion();
 
@@ -96,15 +77,8 @@ public class LearnQuestionActivity extends QuestionActivity {
                     }
 
                     if (isAnswerCorrect(view, quiz)) {
-                        replyIntent.putExtra(IS_ANSWER_CORRECT, true);
-                        setResult(RESULT_OK, replyIntent);
-
                         responseText.setText(R.string.correct_answer);
-
                     } else {
-                        replyIntent.putExtra(IS_ANSWER_CORRECT, false);
-                        setResult(RESULT_OK, replyIntent);
-
                         String message = getString(R.string.incorrect_answer) + " " + quiz.getCurrentQuestion().getCorrectAnswer();
                         responseText.setText(message);
                     }

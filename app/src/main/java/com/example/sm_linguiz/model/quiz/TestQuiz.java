@@ -5,14 +5,16 @@ import com.example.sm_linguiz.model.proxy.DictionaryProxy;
 
 public class TestQuiz extends Quiz {
     private int score;
+    private boolean[] answerCorrectness;// todo use dis
 
     public TestQuiz(DictionaryProxy dictionaryProxy, int questionCount) {
         super(dictionaryProxy);
         score = 0;
-        // todo use question count
+
         TestQuizBuilder testQuizBuilder = new TestQuizBuilder(this.dictionaryProxy);
-        testQuizBuilder.createQuestions();
+        testQuizBuilder.createQuestions(questionCount);
         this.questions = testQuizBuilder.getQuestions();
+        answerCorrectness = new boolean[questionCount];
     }
 
 //    public void updateScore() throws FileNotFoundException {
@@ -59,5 +61,9 @@ public class TestQuiz extends Quiz {
 
     public void incrementScore(int value) {
         score += value;
+    }
+
+    public void markCurrentQuestionCorrectness(boolean isCorrect) {
+        answerCorrectness[this.getCurrentQuestionNumber()] = isCorrect;
     }
 }

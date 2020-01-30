@@ -11,7 +11,7 @@ public class LearnQuiz extends Quiz implements Serializable {
         super(dictionaryProxy);
 
         LearnQuizBuilder learnQuizBuilder = new LearnQuizBuilder(this.dictionaryProxy, Progress.getInstance());
-        learnQuizBuilder.createQuestions();
+        learnQuizBuilder.createQuestions(questionsCount);
         this.questions = learnQuizBuilder.getQuestions();
     }
 }
