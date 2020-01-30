@@ -1,6 +1,5 @@
 package com.example.sm_linguiz.model.quiz;
 
-import com.example.sm_linguiz.database.Word;
 import com.example.sm_linguiz.model.proxy.DictionaryProxy;
 import com.example.sm_linguiz.model.question.Question;
 
@@ -10,11 +9,11 @@ import java.util.List;
 
 public abstract class Quiz implements Serializable {
     protected LinkedList<Question> questions;
-    protected LinkedList<Word> words;
+    protected DictionaryProxy dictionaryProxy;
     protected int currentQuestionNumber;
 
-    public Quiz(List<Word> words) {
-        this.words = new LinkedList<Word>(words);
+    public Quiz(DictionaryProxy dictionaryProxy) {
+        this.dictionaryProxy = dictionaryProxy;
         currentQuestionNumber = 0;
     }
 
@@ -22,12 +21,12 @@ public abstract class Quiz implements Serializable {
         return currentQuestionNumber;
     }
 
-    public LinkedList<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public LinkedList<Word> getDictionaryProxy() {
-        return words;
+    public DictionaryProxy getDictionaryProxy() {
+        return dictionaryProxy;
     }
 
     public Question getCurrentQuestion() {

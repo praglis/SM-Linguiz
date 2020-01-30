@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.example.sm_linguiz.QuestionActivity;
 import com.example.sm_linguiz.R;
-import com.example.sm_linguiz.model.progress.Level;
 import com.example.sm_linguiz.model.question.ClosedQuestion;
 import com.example.sm_linguiz.model.quiz.Quiz;
 
@@ -28,7 +27,7 @@ public class LearnQuestionActivity extends QuestionActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learn_question);
 
-        Level level = (Level) getIntent().getSerializableExtra(SELECTED_LEVEL);
+        String level = getIntent().getStringExtra(SELECTED_LEVEL);
         this.quiz = (Quiz) getIntent().getSerializableExtra(QUIZ);
 
         questionText = findViewById(R.id.learn_question_text);
@@ -69,6 +68,7 @@ public class LearnQuestionActivity extends QuestionActivity {
 
                         responseText.setText(R.string.incorrect_answer);
                     }
+
                     finish();
                 }
             });

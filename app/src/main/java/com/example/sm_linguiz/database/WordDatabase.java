@@ -1,6 +1,7 @@
 package com.example.sm_linguiz.database;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -8,9 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,25 +22,12 @@ public abstract class WordDatabase extends RoomDatabase {
     private static volatile WordDatabase INSTANCE;
     public static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-
-    static WordDatabase getDatabase(final Context context) {
-        if (INSTANCE == null) {
-            synchronized (WordDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            WordDatabase.class, "word_db")
-                            .addCallback(sRoomDatabaseCallback)
-                            .build();
-                }
-            }
-        }
-        return INSTANCE;
-    }
-
+    static AssetManager assetManager;
     private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
+
             databaseWriteExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -54,13 +40,10 @@ public abstract class WordDatabase extends RoomDatabase {
                         Scanner scanner = null;
                         try {
                             scanner = new Scanner(
-                                    new FileReader(
-                                            new File(
-                                                    level + "dictionary"
-                                            )
-                                    )
+                                    assetManager.open(level.toLowerCase() + "dictionary")
                             );
-                        } catch (FileNotFoundException ignore) {
+                        } catch (IOException ignore) {
+                            System.err.println("[CONSOLE DEBUG]Scanner is null");
                         }
                         String line;
                         while (scanner.hasNext()) {
@@ -76,4 +59,21 @@ public abstract class WordDatabase extends RoomDatabase {
             });
         }
     };
+
+    static WordDatabase getDatabase(final Context context) {
+
+        assetManager = context.getAssets();
+
+        if (INSTANCE == null) {
+            synchronized (WordDatabase.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                            WordDatabase.class, "word_db")
+                            .addCallback(sRoomDatabaseCallback)
+                            .build();
+                }
+            }
+        }
+        return INSTANCE;
+    }
 }

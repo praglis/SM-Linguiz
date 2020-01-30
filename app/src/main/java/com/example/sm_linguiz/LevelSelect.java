@@ -1,5 +1,6 @@
 package com.example.sm_linguiz;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,14 +8,14 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
+import com.example.sm_linguiz.database.DictionaryViewModel;
 import com.example.sm_linguiz.database.Word;
-import com.example.sm_linguiz.model.progress.Level;
 import com.example.sm_linguiz.model.proxy.DictionaryProxy;
-import com.example.sm_linguiz.model.proxy.DictionaryViewModel;
 import com.example.sm_linguiz.model.quiz.LearnQuiz;
 import com.example.sm_linguiz.model.quiz.Quiz;
 import com.example.sm_linguiz.model.quiz.TestQuiz;
@@ -32,14 +33,18 @@ public class LevelSelect extends AppCompatActivity {
     private Button backButton;
     private Button[] levelButtons;
     private DictionaryViewModel dictionaryViewModel;
-    private List<Word> wordList;
+    private DictionaryProxy dictionaryProxy;
     private static final int QUESTION_COUNT = 10;
+    private Context context;
+    volatile boolean isDataLoaded;
+    Quiz quiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_select);
 
+        context = this;
 
         backButton = findViewById(R.id.back_button);
 
@@ -66,31 +71,37 @@ public class LevelSelect extends AppCompatActivity {
                 public void onClick(View view) {
 
                     String selectedLevel = (String) ((Button) view).getText();
-                    Level level = new Level(selectedLevel);
-                    Quiz quiz;
+
 
                     boolean learnOrTest = getIntent().getBooleanExtra(LEARN_OR_TEST, true);
+                    dictionaryProxy = new DictionaryProxy(selectedLevel);
 
-                    dictionaryViewModel = ViewModelProviders.of((FragmentActivity) getParent()).get(DictionaryViewModel.class);
-                    dictionaryViewModel.findAll().observe((FragmentActivity) getParent(), new Observer<List<Word>>() {
+                    dictionaryViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(DictionaryViewModel.class);
+                    dictionaryViewModel.findAllByLevel(selectedLevel).observe((LifecycleOwner) context, new Observer<List<Word>>() {
                         @Override
                         public void onChanged(@Nullable final List<Word> words) {
-                            wordList = words;
+                            dictionaryProxy.updateWordList(words);
+                            if (dictionaryProxy.getWordList().size() < 250) return;//todo ok number?
+                            if (learnOrTest) {
+                                quiz = new LearnQuiz(dictionaryProxy, QUESTION_COUNT);
+                            } else {
+                                quiz = new TestQuiz(dictionaryProxy, QUESTION_COUNT);
+                            }
+                            Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
+                            intent.putExtra(SELECTED_LEVEL, selectedLevel); // todo necessary?
+                            intent.putExtra(QUIZ, quiz);
+                            startActivityForResult(intent, 1);
                         }
                     });
 
-                    DictionaryProxy dictionaryProxy = new DictionaryProxy(level, wordList);
+//                    while (!isDataLoaded) {
+//                        try {
+//                            Thread.sleep(250);
+//                        } catch (InterruptedException ignore) {
+//                        }
+//                    }
 
-                    if (learnOrTest) {
-                        quiz = new LearnQuiz(dictionaryProxy, QUESTION_COUNT);
-                    } else {
-                        quiz = new TestQuiz(dictionaryProxy, QUESTION_COUNT);
-                    }
 
-                    Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
-                    intent.putExtra(SELECTED_LEVEL, level);
-                    intent.putExtra(QUIZ, quiz);
-                    startActivityForResult(intent, 1);
                 }
             });
         }
@@ -107,5 +118,7 @@ public class LevelSelect extends AppCompatActivity {
         } else {
 
         }
+        quiz.nextQuestion();
+
     }
 }

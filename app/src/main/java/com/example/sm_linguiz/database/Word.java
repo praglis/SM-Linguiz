@@ -3,8 +3,10 @@ package com.example.sm_linguiz.database;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "word")
-public class Word {
+public class Word implements Comparable<Word>, Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String englishWord;
@@ -23,7 +25,7 @@ public class Word {
         this.id = id;
     }
 
-    public void setSkill(int skill) {
+    void setSkill(int skill) {
         this.skill = skill;
     }
 
@@ -79,5 +81,10 @@ public class Word {
         int result;
         result = englishWord.hashCode() / 11;
         return result;
+    }
+
+    @Override
+    public int compareTo(Word o) {
+        return Integer.compare(this.skill, o.skill);
     }
 }
