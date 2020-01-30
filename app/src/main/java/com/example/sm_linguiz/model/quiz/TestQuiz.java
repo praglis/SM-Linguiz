@@ -3,6 +3,8 @@ package com.example.sm_linguiz.model.quiz;
 import com.example.sm_linguiz.model.builder.TestQuizBuilder;
 import com.example.sm_linguiz.model.proxy.DictionaryProxy;
 
+import java.util.LinkedList;
+
 public class TestQuiz extends Quiz {
     private int score;
     private boolean[] answerCorrectness;// todo use dis
@@ -13,7 +15,7 @@ public class TestQuiz extends Quiz {
 
         TestQuizBuilder testQuizBuilder = new TestQuizBuilder(this.dictionaryProxy);
         testQuizBuilder.createQuestions(questionCount);
-        this.questions = testQuizBuilder.getQuestions();
+        this.questions = new LinkedList<>(testQuizBuilder.getQuestions());
         answerCorrectness = new boolean[questionCount];
     }
 
