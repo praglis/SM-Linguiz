@@ -3,6 +3,7 @@ package com.example.sm_linguiz;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -36,13 +37,17 @@ public class LevelSelect extends AppCompatActivity {
     private DictionaryProxy dictionaryProxy;
     private static final int QUESTION_COUNT = 10;
     private Context context;
-    volatile boolean isDataLoaded;
+    static volatile boolean isDataLoaded;
     Quiz quiz;
+    static boolean isQuestionLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_select);
+
+        Log.d("LevelSelect", "onCreate");
+
 
         context = this;
 
@@ -70,38 +75,47 @@ public class LevelSelect extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
+                    Log.d("LevelSelect", "onClick");
+
+
                     String selectedLevel = (String) ((Button) view).getText();
 
 
                     boolean learnOrTest = getIntent().getBooleanExtra(LEARN_OR_TEST, true);
                     dictionaryProxy = new DictionaryProxy(selectedLevel);
-
+                    if (dictionaryProxy.getWordList().size() < 250) {
+                        isDataLoaded = false;
+                    } else {
+                        isDataLoaded = true;
+                    }
                     dictionaryViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(DictionaryViewModel.class);
                     dictionaryViewModel.findAllByLevel(selectedLevel).observe((LifecycleOwner) context, new Observer<List<Word>>() {
                         @Override
                         public void onChanged(@Nullable final List<Word> words) {
+                            Log.d("LevelSelect", "onChange");
+
+
                             dictionaryProxy.updateWordList(words);
-                            if (dictionaryProxy.getWordList().size() < 250) return;//todo ok number?
+
+                            if (dictionaryProxy.getWordList().size() < 250 && !isDataLoaded)
+                                return;//todo ok number?
+                            isDataLoaded = true;
+
                             if (learnOrTest) {
                                 quiz = new LearnQuiz(dictionaryProxy, QUESTION_COUNT);
                             } else {
                                 quiz = new TestQuiz(dictionaryProxy, QUESTION_COUNT);
                             }
-                            Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
-                            intent.putExtra(SELECTED_LEVEL, selectedLevel); // todo necessary?
-                            intent.putExtra(QUIZ, quiz);
-                            startActivityForResult(intent, 1);
+
+                            if (!isQuestionLoaded) {
+                                isQuestionLoaded = true;
+                                Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
+                                intent.putExtra(QUIZ, quiz);
+                                startActivityForResult(intent, 1);
+                            }
+
                         }
                     });
-
-//                    while (!isDataLoaded) {
-//                        try {
-//                            Thread.sleep(250);
-//                        } catch (InterruptedException ignore) {
-//                        }
-//                    }
-
-
                 }
             });
         }
@@ -111,7 +125,7 @@ public class LevelSelect extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        isDataLoaded = true;
         boolean isAnswerCorrect = getIntent().getBooleanExtra(IS_ANSWER_CORRECT, false);
         if (isAnswerCorrect) {
 
@@ -119,6 +133,13 @@ public class LevelSelect extends AppCompatActivity {
 
         }
         quiz.nextQuestion();
+        if (quiz.getCurrentQuestionNumber() >= quiz.getQuestions().size()) {
+            Intent intent = new Intent(LevelSelect.this, MainActivity.class);
+            startActivity(intent);
+        }
 
+        Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
+        intent.putExtra(QUIZ, quiz);
+        startActivityForResult(intent, 1);
     }
 }

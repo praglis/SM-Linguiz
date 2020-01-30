@@ -17,7 +17,7 @@ public class LearnQuizBuilder extends QuizBuilder {
     }
 
     @Override
-    public void createQuestions() {
+    public void createQuestions() {//todo quesitnd aount
         int questionCount = 20;
         for (int i = 0; i < questionCount; i++) {
             createQuestion();
@@ -49,7 +49,7 @@ public class LearnQuizBuilder extends QuizBuilder {
     private boolean isWordInQuiestions(Word word) {
         if (this.questions == null) return false;
         for (Question question : this.questions) {
-            if (question.getCorrectWord() == word) return true;
+            if (question.getCorrectWord().equals(word)) return true;
         }
         return false;
     }

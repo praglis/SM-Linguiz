@@ -15,4 +15,5 @@
     <string name="select_level">Select difficulty level</string>
     <string name="correct_answer">Correct!</string>
     <string name="incorrect_answer">Unfortunately, the correct answer is: </string>
+    <string name="next_button">Next</string>
 </resources>
