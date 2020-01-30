@@ -2,6 +2,7 @@ package com.example.sm_linguiz.ui.learn;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,12 +14,15 @@ import com.example.sm_linguiz.model.quiz.Quiz;
 
 import static com.example.sm_linguiz.LevelSelect.IS_ANSWER_CORRECT;
 import static com.example.sm_linguiz.LevelSelect.QUIZ;
-import static com.example.sm_linguiz.LevelSelect.SELECTED_LEVEL;
 
 public class LearnQuestionActivity extends QuestionActivity {
     TextView questionText;
     TextView responseText;
     Button[] answers;
+    Button nextButton;
+
+    Intent replyIntent;
+
 
     Quiz quiz;
 
@@ -26,16 +30,15 @@ public class LearnQuestionActivity extends QuestionActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learn_question);
+        Log.d("superDebugowanie", "onCreate");
 
-        String level = getIntent().getStringExtra(SELECTED_LEVEL);
         this.quiz = (Quiz) getIntent().getSerializableExtra(QUIZ);
 
         questionText = findViewById(R.id.learn_question_text);
         responseText = findViewById(R.id.learn_question_response);
-
+        nextButton = findViewById(R.id.learn_next);
 
         questionText.setText(quiz.getCurrentQuestion().getQuestionText());
-
 
         answers = new Button[]{
                 findViewById(R.id.learn_answer_a),
@@ -54,7 +57,7 @@ public class LearnQuestionActivity extends QuestionActivity {
             answerButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent replyIntent = new Intent();
+                    replyIntent = new Intent();
 
                     if (isAnswerCorrect(view, quiz)) {
                         replyIntent.putExtra(IS_ANSWER_CORRECT, true);
@@ -68,10 +71,16 @@ public class LearnQuestionActivity extends QuestionActivity {
 
                         responseText.setText(R.string.incorrect_answer);
                     }
-
-                    finish();
                 }
             });
         }
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replyIntent.putExtra(QUIZ, quiz);
+                finish();
+            }
+        });
     }
 }
