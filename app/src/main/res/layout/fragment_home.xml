@@ -1,52 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/info_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin_small"
-        android:layout_marginEnd="@dimen/info_horizontal_margin"
-        android:text="@string/greeting"
-        android:textAlignment="center"
-        android:textSize="@dimen/text_size_big" />
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/info_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/info_horizontal_margin"
-        android:text="@string/app_desc_p1"
-        android:textSize="@dimen/text_size_small" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/info_horizontal_margin"
+            android:layout_marginEnd="@dimen/info_horizontal_margin"
+            android:text="@string/greeting"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_big" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/info_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/info_horizontal_margin"
-        android:text="@string/app_desc_p2"
-        android:textSize="@dimen/text_size_small" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/info_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/info_horizontal_margin"
+            android:text="@string/app_desc_p1"
+            android:textSize="@dimen/text_size_small" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/info_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/info_horizontal_margin"
-        android:text="@string/app_desc_p3"
-        android:textSize="@dimen/text_size_small" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/info_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/info_horizontal_margin"
+            android:text="@string/app_desc_p2"
+            android:textSize="@dimen/text_size_small" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/info_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/info_horizontal_margin"
-        android:text="@string/app_desc_p4"
-        android:textSize="@dimen/text_size_small" />
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/info_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/info_horizontal_margin"
+            android:text="@string/app_desc_p3"
+            android:textSize="@dimen/text_size_small" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/info_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/info_horizontal_margin"
+            android:layout_marginBottom="@dimen/info_bottom_margin"
+            android:text="@string/app_desc_p4"
+            android:textSize="@dimen/text_size_small" />
+    </LinearLayout>
+</ScrollView>
