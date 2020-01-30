@@ -42,7 +42,7 @@ public class TestResultActivity extends AppCompatActivity {
         List<Word> words = new LinkedList<>(testQuiz.getWords());
 
         TextView testScore = findViewById(R.id.overall_result_text);
-        testScore.setText(getString(R.string.overall_result) + testQuiz.getScore());
+        testScore.setText(getString(R.string.overall_result) + " " + testQuiz.getScore());
         RecyclerView recyclerView = findViewById(R.id.result_recyclerview);
 
         final ResultAdapter adapter = new ResultAdapter();

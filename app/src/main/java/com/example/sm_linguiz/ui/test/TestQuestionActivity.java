@@ -53,8 +53,10 @@ public class TestQuestionActivity extends QuestionActivity {
                 public void onClick(View view) {
                     Log.d("TestQuestionActivity", "setQuestion->onClick");
 
-
-                    ((TestQuiz) quiz).markCurrentQuestionCorrectness(isAnswerCorrect(view, quiz));
+                    if (isAnswerCorrect(view, quiz)) {
+                        ((TestQuiz) quiz).markCurrentQuestionCorrectness(true);
+                        ((TestQuiz) quiz).incrementScore(1);
+                    }
 
 
                     quiz.nextQuestion();
