@@ -31,6 +31,4 @@ public abstract class QuestionActivity extends AppCompatActivity {
 
         return ((Button) button).getText().equals(quiz.getCurrentQuestion().getCorrectAnswer());
     }
-
-
 }

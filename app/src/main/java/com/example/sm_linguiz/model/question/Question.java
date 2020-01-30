@@ -5,12 +5,21 @@ import com.example.sm_linguiz.database.Word;
 import java.io.Serializable;
 
 public abstract class Question implements Serializable {
-    protected Word correctAnswer;
-    protected boolean englishToPolish;
+    Word correctAnswer;
+    boolean englishToPolish;
+    String userAnswer;
 
     public Question(Word correctWord, boolean englishToPolish) {
         this.correctAnswer = correctWord;
         this.englishToPolish = englishToPolish;
+    }
+
+    public String getUserAnswer() {
+        return userAnswer;
+    }
+
+    public void setUserAnswer(String userAnswer) {
+        this.userAnswer = userAnswer;
     }
 
     public String getQuestionText() {

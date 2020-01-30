@@ -75,14 +75,14 @@ public class TestResultActivity extends AppCompatActivity {
             resultListItem = itemView.findViewById(R.id.result_list_item);
         }
 
-        public void bind(Word correctWord, Word userAnswer, boolean isCorrect) {
+        public void bind(Word correctWord, String userAnswer, boolean isCorrect) {
             if (correctWord != null && correctWord.getEnglishWord() != null && correctWord.getPolishWord() != null) {
                 correctWordTextView.setText(correctWord.getEnglishWord() + " - " + correctWord.getPolishWord());
                 if (isCorrect) {
                     resultIcon.setImageResource(R.drawable.ic_good_result);
                 } else {
                     resultIcon.setImageResource(R.drawable.ic_bad_result);
-                    userAnswerTextView.setText(getString(R.string.your_answer));
+                    userAnswerTextView.setText(getString(R.string.your_answer) + " " + userAnswer);
                 }
             }
         }
@@ -103,9 +103,10 @@ public class TestResultActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull ResultHolder holder, int position) {
             if (results != null) {
                 Word correctWord = results.get(position);
+                String userAnswer = testQuiz.getUserAnswer(position);
                 boolean isCorrect = testQuiz.getAnswerCorrectness()[position];
 
-                holder.bind(correctWord, correctWord, isCorrect);
+                holder.bind(correctWord, userAnswer, isCorrect);
             } else {
                 Log.d("MainActivity", "No results");
             }

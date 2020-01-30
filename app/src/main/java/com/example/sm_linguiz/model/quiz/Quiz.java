@@ -16,6 +16,14 @@ public abstract class Quiz implements Serializable {
         currentQuestionNumber = 0;
     }
 
+    public void setCurrentQuestionUserAnswer(String currentQuestionUserAnswer) {
+        questions.get(currentQuestionNumber).setUserAnswer(currentQuestionUserAnswer);
+    }
+
+    public String getUserAnswer(int questionNumber){
+        return questions.get(questionNumber).getUserAnswer();
+    }
+
     public int getCurrentQuestionNumber() {
         return currentQuestionNumber;
     }
