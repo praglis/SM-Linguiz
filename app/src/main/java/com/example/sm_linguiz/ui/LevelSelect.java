@@ -33,14 +33,14 @@ import static com.example.sm_linguiz.ui.test.TestFragment.TEST_LENGTH;
 public class LevelSelect extends AppCompatActivity {
     public static final String QUIZ = "quiz";
     public static final String DICTIONARY_VIEW_MODEL = "dictionaryViewModel";
-    private static final int STANDARD_DICTIONARY_SIZE = 300;
+    private static final int STANDARD_DICTIONARY_SIZE = 299;
     private Button backButton;
     private Button[] levelButtons;
     private DictionaryViewModel dictionaryViewModel;
     private DictionaryProxy dictionaryProxy;
     private static final int QUESTION_COUNT = 10;
     private Context context;
-    static boolean isDataLoaded;
+    static boolean isDataLoaded = false;
     Quiz quiz;
     static boolean isQuestionLoaded = false;
 
@@ -72,18 +72,29 @@ public class LevelSelect extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("LevelSelect", "onStart[PR]");
+
+
         for (Button levelButton : levelButtons) {
             levelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Log.d("LevelSelect", "onCreate->onClick(answer)[PR]");
 
+                    isQuestionLoaded = false;
+                    isDataLoaded = false;
+
                     String selectedLevel = (String) ((Button) view).getText();
 
                     boolean learnOrTest = getIntent().getBooleanExtra(LEARN_OR_TEST, true);
                     dictionaryProxy = new DictionaryProxy(selectedLevel);
 
-                    isDataLoaded = dictionaryProxy.getWordList().size() >= STANDARD_DICTIONARY_SIZE;
 
                     dictionaryViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(DictionaryViewModel.class);
                     dictionaryViewModel.findAllByLevel(selectedLevel).observe((LifecycleOwner) context, new Observer<List<Word>>() {
@@ -93,7 +104,8 @@ public class LevelSelect extends AppCompatActivity {
 
                             dictionaryProxy.updateWordList(words);
 
-                            if (dictionaryProxy.getWordList().size() < STANDARD_DICTIONARY_SIZE && !isDataLoaded) return;
+                            if (dictionaryProxy.getWordList().size() < STANDARD_DICTIONARY_SIZE || isDataLoaded)
+                                return;
                             isDataLoaded = true;
                             Log.d("LevelSelect", "after if 290[PR]");
 
@@ -126,15 +138,6 @@ public class LevelSelect extends AppCompatActivity {
                 }
             });
         }
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("LevelSelect", "onStart[PR]");
-        isQuestionLoaded = false;
-        isDataLoaded = false;
     }
 
     @Override

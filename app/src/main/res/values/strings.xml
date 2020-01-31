@@ -14,7 +14,7 @@
     <string name="back">BACK</string>
     <string name="select_level">Select difficulty level</string>
     <string name="correct_answer">Correct!</string>
-    <string name="incorrect_answer">Unfortunately, the correct answer is: </string>
+    <string name="incorrect_answer">The correct answer is: </string>
     <string name="next_button">Next</string>
     <string name="overall_result">Number of correct answers:</string>
     <string name="result_icon_desc">icon</string>
@@ -37,7 +37,7 @@
 </string>
     <string name="app_desc_p4">
         The test mode is similar to the learn mode with main difference - you can\'t skip questions, and you aren\'t able to see your result until the end of the test.
-        Additionally, this mode does not remember if you guessed correctly meaning of certain word, but it saves your test score and enables to view it later.
+        This mode does not remember if you guessed correctly meaning of certain word.
     </string>
     <string name="defaultLearnLength">10</string>
     <string name="question_skipped">Question was skipped.</string>

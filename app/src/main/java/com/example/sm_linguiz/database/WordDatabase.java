@@ -9,8 +9,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import java.io.IOException;
-import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -32,29 +30,29 @@ public abstract class WordDatabase extends RoomDatabase {
                 @Override
                 public void run() {
                     WordDao dao = INSTANCE.wordDao();
-                    dao.deleteAll();//todo usunac te linie
-
-                    String[] levels = {"A1", "A2", "B1", "B2", "C1", "C2"};
-                    for (String level : levels) {
-
-                        Scanner scanner = null;
-                        try {
-                            scanner = new Scanner(
-                                    assetManager.open(level.toLowerCase() + "dictionary")
-                            );
-                        } catch (IOException ignore) {
-                            System.err.println("[CONSOLE DEBUG]Scanner is null");
-                        }
-                        String line;
-                        while (scanner.hasNext()) {
-                            line = scanner.nextLine();
-                            if (!line.startsWith("#") && !line.isEmpty()) {
-                                String[] columns = line.split("=");
-                                dao.insert(new Word(columns[0], columns[1], level));
-                            }
-                        }
-                        scanner.close();
-                    }
+//                    dao.deleteAll();//todo usunac te linie
+//
+//                    String[] levels = {"A1", "A2", "B1", "B2", "C1", "C2"};
+//                    for (String level : levels) {
+//
+//                        Scanner scanner = null;
+//                        try {
+//                            scanner = new Scanner(
+//                                    assetManager.open(level.toLowerCase() + "dictionary")
+//                            );
+//                        } catch (IOException ignore) {
+//                            System.err.println("[CONSOLE DEBUG]Scanner is null");
+//                        }
+//                        String line;
+//                        while (scanner.hasNext()) {
+//                            line = scanner.nextLine();
+//                            if (!line.startsWith("#") && !line.isEmpty()) {
+//                                String[] columns = line.split("=");
+//                                dao.insert(new Word(columns[0], columns[1], level));
+//                            }
+//                        }
+//                        scanner.close();
+//                    }
                 }
             });
         }

@@ -70,6 +70,7 @@ public class LearnQuestionActivity extends QuestionActivity {
     }
     @Override
     protected void onPause() {
+        Log.d("LearnQuestionActivity", "onPause[PR]");
         mSensorManager.unregisterListener(mSensorListener);
         super.onPause();
     }
@@ -120,6 +121,8 @@ public class LearnQuestionActivity extends QuestionActivity {
             }
         });
     }
+
+
 
     private void setQuestion() {
         questionText.setText(quiz.getCurrentQuestion().getQuestionText());
