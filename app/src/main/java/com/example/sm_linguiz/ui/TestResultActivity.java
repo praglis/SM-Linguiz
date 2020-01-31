@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sm_linguiz.R;
 import com.example.sm_linguiz.database.Word;
+import com.example.sm_linguiz.model.question.Question;
 import com.example.sm_linguiz.model.quiz.TestQuiz;
 
 import java.util.LinkedList;
@@ -75,14 +76,18 @@ public class TestResultActivity extends AppCompatActivity {
             resultListItem = itemView.findViewById(R.id.result_list_item);
         }
 
-        public void bind(Word correctWord, String userAnswer, boolean isCorrect) {
+        public void bind(boolean isCorrect, Question question) {
+            Word correctWord = question.getCorrectWord();
+            boolean isEnglishToPolish = question.isEnglishToPolish();
             if (correctWord != null && correctWord.getEnglishWord() != null && correctWord.getPolishWord() != null) {
-                correctWordTextView.setText(correctWord.getEnglishWord() + " - " + correctWord.getPolishWord());
+                correctWordTextView.setText(correctWord.getAppropriateWord(!isEnglishToPolish) + " - " + correctWord.getAppropriateWord(isEnglishToPolish));
                 if (isCorrect) {
                     resultIcon.setImageResource(R.drawable.ic_good_result);
+                    resultListItem.setBackgroundColor(getResources().getColor(R.color.correct_green));
                 } else {
                     resultIcon.setImageResource(R.drawable.ic_bad_result);
-                    userAnswerTextView.setText(getString(R.string.your_answer) + " " + userAnswer);
+                    userAnswerTextView.setText(getString(R.string.your_answer) + " " + question.getUserAnswer());
+                    resultListItem.setBackgroundColor(getResources().getColor(R.color.incorrect_red));
                 }
             }
         }
@@ -102,11 +107,12 @@ public class TestResultActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ResultHolder holder, int position) {
             if (results != null) {
-                Word correctWord = results.get(position);
-                String userAnswer = testQuiz.getUserAnswer(position);
+                Question question = testQuiz.getQuestions().get(position);
+//                Word correctWord = results.get(position);
+//                String userAnswer = testQuiz.getUserAnswer(position);
                 boolean isCorrect = testQuiz.getAnswerCorrectness()[position];
 
-                holder.bind(correctWord, userAnswer, isCorrect);
+                holder.bind(isCorrect, question);
             } else {
                 Log.d("MainActivity", "No results");
             }

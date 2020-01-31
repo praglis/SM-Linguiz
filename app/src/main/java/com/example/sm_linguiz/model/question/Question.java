@@ -33,5 +33,9 @@ public abstract class Question implements Serializable {
     public Word getCorrectWord() {
         return correctAnswer;
     }
+
+    public boolean isEnglishToPolish() {
+        return englishToPolish;
+    }
 }
 

@@ -25,7 +25,8 @@
         Regardless of your Polish skill you will find Linguiz useful, because it covers all six language levels: from A1 up to C2.
     </string>
     <string name="app_desc_p2">
-        There are two modes at your disposition: \'learn\' and \'test\', (you can navigate to them through the bottom navigation bar) and each of them works differently:
+        There are two modes at your disposition: \'learn\' and \'test\', you can navigate to them through the bottom navigation bar.
+        Each of them works differently:
     </string>
     <string name="app_desc_p3">
         In the learn mode you have to guess a word meaning being provided four possible answers, while only one of them is correct.
