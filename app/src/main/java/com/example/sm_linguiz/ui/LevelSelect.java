@@ -29,10 +29,8 @@ import java.util.List;
 import static com.example.sm_linguiz.ui.MainActivity.LEARN_OR_TEST;
 
 public class LevelSelect extends AppCompatActivity {
-    public static final String SELECTED_LEVEL = "selectedLevel";
     public static final String QUIZ = "quiz";
-    public static final String IS_ANSWER_CORRECT = "is_correct";
-    public static final int CORRECT_ANSWER_REQUEST_CODE = 2;
+    public static final String DICTIONARY_VIEW_MODEL = "dictionaryViewModel";
     private Button backButton;
     private Button[] levelButtons;
     private DictionaryViewModel dictionaryViewModel;
@@ -46,8 +44,7 @@ public class LevelSelect extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("LevelSelect", "onCreate");
-
+        Log.d("LevelSelect", "onCreate[PR]");
         setContentView(R.layout.activity_level_select);
 
         context = this;
@@ -66,7 +63,7 @@ public class LevelSelect extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("LevelSelect", "onCreate->onClick(back)");
+                Log.d("LevelSelect", "onCreate->onClick(back)[PR]");
                 Intent intent = new Intent(LevelSelect.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -76,47 +73,48 @@ public class LevelSelect extends AppCompatActivity {
             levelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("LevelSelect", "onCreate->onClick(answer)");
+                    Log.d("LevelSelect", "onCreate->onClick(answer)[PR]");
 
                     String selectedLevel = (String) ((Button) view).getText();
 
                     boolean learnOrTest = getIntent().getBooleanExtra(LEARN_OR_TEST, true);
                     dictionaryProxy = new DictionaryProxy(selectedLevel);
 
-                    isDataLoaded = dictionaryProxy.getWordList().size() >= 250;
+                    isDataLoaded = dictionaryProxy.getWordList().size() >= 290;
 
                     dictionaryViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(DictionaryViewModel.class);
                     dictionaryViewModel.findAllByLevel(selectedLevel).observe((LifecycleOwner) context, new Observer<List<Word>>() {
                         @Override
                         public void onChanged(@Nullable final List<Word> words) {
-                            Log.d("LevelSelect", "onCreate->onClick(answer)->onChange");
+                            Log.d("LevelSelect", "onCreate->onClick(answer)->onChange[PR]");
 
                             dictionaryProxy.updateWordList(words);
 
-                            if (dictionaryProxy.getWordList().size() < 250 && !isDataLoaded)
-                                return;//todo ok number?
+                            if (dictionaryProxy.getWordList().size() < 290 && !isDataLoaded) return;
                             isDataLoaded = true;
-                            Log.d("LevelSelect", "after if 250");
+                            Log.d("LevelSelect", "after if 290[PR]");
 
                             if (learnOrTest) {
-                                Log.d("LevelSelect", "after if learnOrTest == true");
+                                Log.d("LevelSelect", "after if learnOrTest == true[PR]");
                                 quiz = new LearnQuiz(dictionaryProxy, QUESTION_COUNT);
                                 if (!isQuestionLoaded) {
-                                    Log.d("LevelSelect", "after if isQuestionLoaded != true");
+                                    Log.d("LevelSelect", "after if isQuestionLoaded != true[PR]");
                                     isQuestionLoaded = true;
                                     Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
                                     intent.putExtra(QUIZ, quiz);
+                                    //intent.putExtra(DICTIONARY_VIEW_MODEL, dictionaryViewModel);
                                     startActivity(intent);
                                 }
                             } else {
-                                Log.d("LevelSelect", "after if learnOrTest == false");
+                                Log.d("LevelSelect", "after if learnOrTest == false[PR]");
                                 quiz = new TestQuiz(dictionaryProxy, QUESTION_COUNT);
                                 if (!isQuestionLoaded) {
-                                    Log.d("LevelSelect", "after if isQuestionLoaded != true");
+                                    Log.d("LevelSelect", "after if isQuestionLoaded != true[PR]");
 
                                     isQuestionLoaded = true;
                                     Intent intent = new Intent(LevelSelect.this, TestQuestionActivity.class);
                                     intent.putExtra(QUIZ, quiz);
+                                    //intent.putExtra(DICTIONARY_VIEW_MODEL, dictionaryViewModel);
                                     startActivity(intent);
                                 }
                             }
@@ -129,9 +127,16 @@ public class LevelSelect extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStart() {
+        super.onStart();
+        Log.d("LevelSelect", "onStart[PR]");
         isQuestionLoaded = false;
         isDataLoaded = false;
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        Log.d("LevelSelect", "onResume[PR]");
     }
 }

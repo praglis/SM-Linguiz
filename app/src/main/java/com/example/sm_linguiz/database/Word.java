@@ -87,4 +87,8 @@ public class Word implements Comparable<Word>, Serializable {
     public int compareTo(Word o) {
         return Integer.compare(this.skill, o.skill);
     }
+
+    public void changeSkill(int i) {
+        this.skill += i;
+    }
 }

@@ -7,7 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.sm_linguiz.R;
+import com.example.sm_linguiz.database.DictionaryViewModel;
+import com.example.sm_linguiz.database.Word;
 import com.example.sm_linguiz.model.question.ClosedQuestion;
 import com.example.sm_linguiz.ui.MainActivity;
 import com.example.sm_linguiz.ui.QuestionActivity;
@@ -17,15 +21,19 @@ public class LearnQuestionActivity extends QuestionActivity {
     Button nextButton;
 
     boolean hasUserAnswered;
+    DictionaryViewModel dictionaryViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("LearnQuestionActivity", "onCreate");
+        Log.d("LearnQuestionActivity", "onCreate[PR]");
 
         setContentView(R.layout.activity_learn_question);
 
         hasUserAnswered = false;
+        //dictionaryViewModel = (DictionaryViewModel) getIntent().getSerializableExtra(DICTIONARY_VIEW_MODEL);
+        dictionaryViewModel = new ViewModelProvider(this).get(DictionaryViewModel.class);
+
 
         questionText = findViewById(R.id.learn_question_text);
         responseText = findViewById(R.id.learn_question_response);
@@ -75,13 +83,17 @@ public class LearnQuestionActivity extends QuestionActivity {
                     for (Button answerButton : answers) {
                         answerButton.setEnabled(false);
                     }
-
+                    Word answeredWord = quiz.getCurrentQuestion().getCorrectWord();
                     if (isAnswerCorrect(view, quiz)) {
                         responseText.setText(R.string.correct_answer);
+                        answeredWord.changeSkill(1);
+
                     } else {
                         String message = getString(R.string.incorrect_answer) + " " + quiz.getCurrentQuestion().getCorrectAnswer();
                         responseText.setText(message);
+                        answeredWord.changeSkill(-1);
                     }
+                    dictionaryViewModel.update(answeredWord);
                 }
             });
         }
