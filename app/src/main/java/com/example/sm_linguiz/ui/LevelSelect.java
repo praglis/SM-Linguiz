@@ -27,6 +27,7 @@ import com.example.sm_linguiz.ui.test.TestQuestionActivity;
 import java.util.List;
 
 import static com.example.sm_linguiz.ui.MainActivity.LEARN_OR_TEST;
+import static com.example.sm_linguiz.ui.learn.LearnFragment.LEARN_LENGTH;
 
 public class LevelSelect extends AppCompatActivity {
     public static final String QUIZ = "quiz";
@@ -96,13 +97,13 @@ public class LevelSelect extends AppCompatActivity {
 
                             if (learnOrTest) {
                                 Log.d("LevelSelect", "after if learnOrTest == true[PR]");
-                                quiz = new LearnQuiz(dictionaryProxy, QUESTION_COUNT);
+                                int questionCount = getIntent().getIntExtra(LEARN_LENGTH, 10);
+                                quiz = new LearnQuiz(dictionaryProxy, questionCount);
                                 if (!isQuestionLoaded) {
                                     Log.d("LevelSelect", "after if isQuestionLoaded != true[PR]");
                                     isQuestionLoaded = true;
                                     Intent intent = new Intent(LevelSelect.this, LearnQuestionActivity.class);
                                     intent.putExtra(QUIZ, quiz);
-                                    //intent.putExtra(DICTIONARY_VIEW_MODEL, dictionaryViewModel);
                                     startActivity(intent);
                                 }
                             } else {
@@ -114,7 +115,6 @@ public class LevelSelect extends AppCompatActivity {
                                     isQuestionLoaded = true;
                                     Intent intent = new Intent(LevelSelect.this, TestQuestionActivity.class);
                                     intent.putExtra(QUIZ, quiz);
-                                    //intent.putExtra(DICTIONARY_VIEW_MODEL, dictionaryViewModel);
                                     startActivity(intent);
                                 }
                             }

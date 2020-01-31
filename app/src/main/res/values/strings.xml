@@ -38,4 +38,5 @@
         The test mode is similar to the learn mode with main difference - you can\'t skip questions, and you aren\'t able to see your result until the end of the test.
         Additionally, this mode does not remember if you guessed correctly meaning of certain word, but it saves your test score and enables to view it later.
     </string>
+    <string name="defaultLearnLength">10</string>
 </resources>

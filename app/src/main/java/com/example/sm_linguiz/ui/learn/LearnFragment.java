@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,31 +22,50 @@ import com.example.sm_linguiz.ui.LevelSelect;
 import static com.example.sm_linguiz.ui.MainActivity.LEARN_OR_TEST;
 
 public class LearnFragment extends Fragment {
+    public static final String LEARN_LENGTH = "learnLength";
+    EditText learnLengthEditText;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        Log.d("LearnFragment","onCreateView");
+        Log.d("LearnFragment", "onCreateView");
         LearnViewModel learnViewModel = ViewModelProviders.of(this).get(LearnViewModel.class);
         View root = inflater.inflate(R.layout.fragment_learn, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
+        final TextView textView = root.findViewById(R.id.learn_length_label);
         learnViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
         });
+        return root;
+    }
 
-        Button learnButton = root.findViewById(R.id.learn_button);
+    @Override
+    public void onStart() {
+        super.onStart();
+        learnLengthEditText = getView().findViewById(R.id.learn_length_edit);
+        learnLengthEditText.setText(R.string.defaultLearnLength);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Button learnButton = getView().findViewById(R.id.learn_button);
         learnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("LearnFragment","onClick");
+                Log.d("LearnFragment", "onClick");
+
+                int learnLength = 10;
+                if (learnLengthEditText.getText() != null)
+                    learnLength = Integer.parseInt(learnLengthEditText.getText().toString());
+
                 Intent intent = new Intent(getActivity(), LevelSelect.class);
+                intent.putExtra(LEARN_LENGTH, learnLength);
                 intent.putExtra(LEARN_OR_TEST, true);
                 startActivity(intent);
             }
         });
-
-        return root;
     }
 }

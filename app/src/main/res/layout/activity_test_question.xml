@@ -26,8 +26,9 @@
 
             <Button
                 android:id="@+id/test_answer_b"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/answer_button_width"
+                android:layout_height="@dimen/answer_button_height"
+                android:singleLine="false"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -35,8 +36,9 @@
 
             <Button
                 android:id="@+id/test_answer_a"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/answer_button_width"
+                android:layout_height="@dimen/answer_button_height"
+                android:singleLine="false"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:gravity="center" />
@@ -48,16 +50,18 @@
 
             <Button
                 android:id="@+id/test_answer_d"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/answer_button_width"
+                android:layout_height="@dimen/answer_button_height"
+                android:singleLine="false"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
             <Button
                 android:id="@+id/test_answer_c"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/answer_button_width"
+                android:layout_height="@dimen/answer_button_height"
+                android:singleLine="false"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_vertical_margin" />
         </TableRow>
