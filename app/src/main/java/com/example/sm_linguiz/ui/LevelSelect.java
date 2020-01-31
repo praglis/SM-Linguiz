@@ -28,6 +28,7 @@ import java.util.List;
 
 import static com.example.sm_linguiz.ui.MainActivity.LEARN_OR_TEST;
 import static com.example.sm_linguiz.ui.learn.LearnFragment.LEARN_LENGTH;
+import static com.example.sm_linguiz.ui.test.TestFragment.TEST_LENGTH;
 
 public class LevelSelect extends AppCompatActivity {
     public static final String QUIZ = "quiz";
@@ -108,7 +109,8 @@ public class LevelSelect extends AppCompatActivity {
                                 }
                             } else {
                                 Log.d("LevelSelect", "after if learnOrTest == false[PR]");
-                                quiz = new TestQuiz(dictionaryProxy, QUESTION_COUNT);
+                                int questionCount = getIntent().getIntExtra(TEST_LENGTH, 10);
+                                quiz = new TestQuiz(dictionaryProxy, questionCount);
                                 if (!isQuestionLoaded) {
                                     Log.d("LevelSelect", "after if isQuestionLoaded != true[PR]");
 
