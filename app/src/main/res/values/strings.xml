@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Linguiz</string>
-    <string name="title_home">Home</string>
+    <string name="title_home">Info</string>
     <string name="title_learn">Learn</string>
     <string name="title_test">Test</string>
     <string name="learn_start">START LEARNING SESSION</string>
@@ -19,4 +19,23 @@
     <string name="overall_result">Number of correct answers:</string>
     <string name="result_icon_desc">icon</string>
     <string name="your_answer">Your answer:</string>
+    <string name="greeting">Welcome to LINQUIZ!</string>
+    <string name="app_desc_p1">
+        The app designated to teach you Polish vocabulary in comfy way.
+        Regardless of your Polish skill you will find Linguiz useful, because it covers all six language levels: from A1 up to C2.
+    </string>
+    <string name="app_desc_p2">
+        There are two modes at your disposition: \'learn\' and \'test\', (you can navigate to them through the bottom navigation bar) and each of them works differently:
+    </string>
+    <string name="app_desc_p3">
+        In the learn mode you have to guess a word meaning being provided four possible answers, while only one of them is correct.
+        After you choose an answer, you are being informed about the answer\'s correctness.
+        You can specify of how many questions will your learning session consist.
+        Every time you answer correctly or make mistake the app will remember this.
+        In future learning sessions more problematic words will appear more frequently.
+</string>
+    <string name="app_desc_p4">
+        The test mode is similar to the learn mode with main difference - you can\'t skip questions, and you aren\'t able to see your result until the end of the test.
+        Additionally, this mode does not remember if you guessed correctly meaning of certain word, but it saves your test score and enables to view it later.
+    </string>
 </resources>
