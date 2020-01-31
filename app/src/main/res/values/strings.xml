@@ -1,16 +1,16 @@
 <resources>
-    <string name="app_name">Linguiz</string>
+    <string name="app_name" translatable="false">Linguiz</string>
     <string name="title_home">Info</string>
     <string name="title_learn">Learn</string>
     <string name="title_test">Test</string>
     <string name="learn_start">START LEARNING SESSION</string>
     <string name="test_start">TAKE A TEST</string>
-    <string name="level_a1">A1</string>
-    <string name="level_a2">A2</string>
-    <string name="level_b1">B1</string>
-    <string name="level_b2">B2</string>
-    <string name="level_c1">C1</string>
-    <string name="level_c2">C2</string>
+    <string name="level_a1" translatable="false">A1</string>
+    <string name="level_a2" translatable="false">A2</string>
+    <string name="level_b1" translatable="false">B1</string>
+    <string name="level_b2" translatable="false">B2</string>
+    <string name="level_c1" translatable="false">C1</string>
+    <string name="level_c2" translatable="false">C2</string>
     <string name="back">BACK</string>
     <string name="select_level">Select difficulty level</string>
     <string name="correct_answer">Correct!</string>
@@ -26,12 +26,12 @@
     </string>
     <string name="app_desc_p2">
         There are two modes at your disposition: \'learn\' and \'test\', you can navigate to them through the bottom navigation bar.
-        Each of them works differently:
+        In both modes you have to guess a word meaning being provided four possible answers, while only one of them is correct.
+        But they work differently:
     </string>
     <string name="app_desc_p3">
-        In the learn mode you have to guess a word meaning being provided four possible answers, while only one of them is correct.
-        After you choose an answer, you are being informed about the answer\'s correctness.
-        You can specify of how many questions will your learning session consist.
+        After you choose an answer in the learn mode, you are being informed about the answer\'s correctness.
+        You can skip questions by tapping \'next\' or shaking your phone.
         Every time you answer correctly or make mistake the app will remember this.
         In future learning sessions more problematic words will appear more frequently.
 </string>
@@ -39,6 +39,6 @@
         The test mode is similar to the learn mode with main difference - you can\'t skip questions, and you aren\'t able to see your result until the end of the test.
         This mode does not remember if you guessed correctly meaning of certain word.
     </string>
-    <string name="defaultLearnLength">10</string>
+    <string name="defaultLearnLength" translatable="false">10</string>
     <string name="question_skipped">Question was skipped.</string>
 </resources>

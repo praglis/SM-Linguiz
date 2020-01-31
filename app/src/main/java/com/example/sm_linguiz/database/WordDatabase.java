@@ -30,7 +30,7 @@ public abstract class WordDatabase extends RoomDatabase {
                 @Override
                 public void run() {
                     WordDao dao = INSTANCE.wordDao();
-//                    dao.deleteAll();//todo usunac te linie
+//                    dao.deleteAll();
 //
 //                    String[] levels = {"A1", "A2", "B1", "B2", "C1", "C2"};
 //                    for (String level : levels) {
