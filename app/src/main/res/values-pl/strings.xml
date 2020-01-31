@@ -15,4 +15,10 @@
     <string name="overall_result">"Liczba poprawnych odpowiedzi: "</string>
     <string name="next_button">Dalej</string>
     <string name="learn_start">ROZPOCZNIJ SESJĘ NAUKI</string>
+    <string name="app_desc_p1">Jest to aplikacja przeznaczona do nauki języka angielskiego w przyjemny sposób. Będzie dla Ciebie użyteczna bez względu na twój poziom zaawansowania, ponieważ pozwala na naukę na wszystkich poziomach zaawansowania: od A1 aż do C2.</string>
+    <string name="app_desc_p2">Masz do swojej dyspozycji dwa tryby: \'nauki\' i \'testu\' - możesz się do nich dostać poprzez dolny pasek nawigacyjny. W obu trybach masz za zadanie odgadywać znaczenie słowa wybierając jedną z czterech odpowiedzi. Tryby te działają jednak inaczej:</string>
+    <string name="app_desc_p3">Po wybraniu odpowiedzi w trybie nauki zostaniesz poinformowany o poprawności swojej odpowiedzi. Możesz pomijać pytania dotykając przycisku \'dalej\' bądź potrząsając telefonem. Aplikacja zapamiętuje każdą poprawną i błędną odpowiedź. Dzięki temu w przyszłych sesjach nauki problematyczne słowa będą pojawiać się częściej.</string>
+    <string name="app_desc_p4">Tryb testu jest podobny do trybu nauki. Główną różnicą jest brak możliwości pomijania: pytań i zobaczenia poprawnych odpowiedzi przed ukończeniem testu.</string>
+    <string name="question_number_learn">Liczba pytań podczas sesji nauki:</string>
+    <string name="question_number_test">Liczba pytań na teście:</string>
 </resources>

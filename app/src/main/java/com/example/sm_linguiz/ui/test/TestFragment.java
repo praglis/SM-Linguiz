@@ -9,13 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.sm_linguiz.R;
 import com.example.sm_linguiz.ui.LevelSelect;
@@ -30,16 +26,7 @@ public class TestFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         Log.d("TestFragment", "onCreateView");
 
-        TestViewModel testViewModel = ViewModelProviders.of(this).get(TestViewModel.class);
         View root = inflater.inflate(R.layout.fragment_test, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        testViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-
 
         return root;
     }

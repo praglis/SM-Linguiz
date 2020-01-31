@@ -35,10 +35,9 @@
         Every time you answer correctly or make mistake the app will remember this.
         In future learning sessions more problematic words will appear more frequently.
 </string>
-    <string name="app_desc_p4">
-        The test mode is similar to the learn mode with main difference - you can\'t skip questions, and you aren\'t able to see your result until the end of the test.
-        This mode does not remember if you guessed correctly meaning of certain word.
-    </string>
+    <string name="app_desc_p4">"The test mode is similar to the learn mode with main difference - you can't skip questions, and you aren't able to see your result until the end of the test.\n    "</string>
     <string name="defaultLearnLength" translatable="false">10</string>
     <string name="question_skipped">Question was skipped.</string>
+    <string name="question_number_learn">Number of questions in a learn session:</string>
+    <string name="question_number_test">Number of questions in a test:</string>
 </resources>

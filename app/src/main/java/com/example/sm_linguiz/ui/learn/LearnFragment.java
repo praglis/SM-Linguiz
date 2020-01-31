@@ -11,10 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.sm_linguiz.R;
 import com.example.sm_linguiz.ui.LevelSelect;
@@ -29,15 +26,8 @@ public class LearnFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         Log.d("LearnFragment", "onCreateView");
-        LearnViewModel learnViewModel = ViewModelProviders.of(this).get(LearnViewModel.class);
         View root = inflater.inflate(R.layout.fragment_learn, container, false);
-        final TextView textView = root.findViewById(R.id.learn_length_label);
-        learnViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
         return root;
     }
 
