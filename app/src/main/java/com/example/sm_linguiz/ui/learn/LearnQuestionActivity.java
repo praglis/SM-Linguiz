@@ -1,11 +1,17 @@
 package com.example.sm_linguiz.ui.learn;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -16,6 +22,8 @@ import com.example.sm_linguiz.model.question.ClosedQuestion;
 import com.example.sm_linguiz.ui.MainActivity;
 import com.example.sm_linguiz.ui.QuestionActivity;
 
+import java.util.Objects;
+
 public class LearnQuestionActivity extends QuestionActivity {
     TextView responseText;
     Button nextButton;
@@ -23,12 +31,62 @@ public class LearnQuestionActivity extends QuestionActivity {
     boolean hasUserAnswered;
     DictionaryViewModel dictionaryViewModel;
 
+    private SensorManager mSensorManager;
+    private float mAccel;
+    private float mAccelCurrent;
+    private float mAccelLast;
+
+    private final SensorEventListener mSensorListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            mAccelLast = mAccelCurrent;
+            mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
+            float delta = mAccelCurrent - mAccelLast;
+            mAccel = mAccel * 0.9f + delta;
+            if (mAccel > 12) {
+                Toast.makeText(getApplicationContext(), getString(R.string.question_skipped), Toast.LENGTH_SHORT).show();
+                quiz.nextQuestion();
+
+                if (quiz.getCurrentQuestionNumber() >= quiz.getQuestions().size()) {
+                    Intent intent = new Intent(LearnQuestionActivity.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    setQuestion();
+                }
+            }
+        }
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        }
+    };
+    @Override
+    protected void onResume() {
+        mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+        super.onResume();
+    }
+    @Override
+    protected void onPause() {
+        mSensorManager.unregisterListener(mSensorListener);
+        super.onPause();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("LearnQuestionActivity", "onCreate[PR]");
 
         setContentView(R.layout.activity_learn_question);
+
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Objects.requireNonNull(mSensorManager).registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+        mAccel = 10f;
+        mAccelCurrent = SensorManager.GRAVITY_EARTH;
+        mAccelLast = SensorManager.GRAVITY_EARTH;
 
         hasUserAnswered = false;
         //dictionaryViewModel = (DictionaryViewModel) getIntent().getSerializableExtra(DICTIONARY_VIEW_MODEL);
