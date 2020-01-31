@@ -62,13 +62,13 @@ public class TestQuestionActivity extends QuestionActivity {
 
                     quiz.nextQuestion();
 
-                    if (quiz.getCurrentQuestionNumber() >= quiz.getQuestions().size() - 1) {
+                    if (quiz.getCurrentQuestionNumber() >= quiz.getQuestions().size()) {
                         Intent intent = new Intent(TestQuestionActivity.this, TestResultActivity.class);
                         intent.putExtra(QUIZ, quiz);
                         startActivity(intent);
+                    } else {
+                        setQuestion();
                     }
-
-                    setQuestion();
                 }
             });
         }

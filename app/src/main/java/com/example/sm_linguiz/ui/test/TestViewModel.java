@@ -10,7 +10,7 @@ public class TestViewModel extends ViewModel {
 
     public TestViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("Number of questions in a test:");
     }
 
     public LiveData<String> getText() {

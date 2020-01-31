@@ -9,7 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:text="@string/select_level" />
+        android:text="@string/select_level"
+        android:textSize="@dimen/text_size_big" />
 
     <Button
         android:id="@+id/level_a1"

@@ -14,7 +14,7 @@ public class LearnViewModel extends ViewModel {
         Log.d("LearnViewModel", "LearnViewModel");
 
         mText = new MutableLiveData<>();
-        mText.setValue("This is learn fragment");
+        mText.setValue("Number of questions in a learn session:");
     }
 
     LiveData<String> getText() {

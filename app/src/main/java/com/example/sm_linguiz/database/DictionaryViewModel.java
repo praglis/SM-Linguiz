@@ -26,6 +26,10 @@ public class DictionaryViewModel extends AndroidViewModel {
         return wordList;
     }
 
+    public LiveData<Integer> getSkillSumByLevel(String level) {
+        return wordRepository.getPointsForLevel(level);
+    }
+
     public void insert(Word word) {
         wordRepository.insert(word);
     }

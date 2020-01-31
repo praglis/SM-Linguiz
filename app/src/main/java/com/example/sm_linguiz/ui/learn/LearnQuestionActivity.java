@@ -51,15 +51,14 @@ public class LearnQuestionActivity extends QuestionActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 quiz.nextQuestion();
 
-                if (quiz.getCurrentQuestionNumber() >= quiz.getQuestions().size() - 1) {
+                if (quiz.getCurrentQuestionNumber() >= quiz.getQuestions().size()) {
                     Intent intent = new Intent(LearnQuestionActivity.this, MainActivity.class);
                     startActivity(intent);
+                } else {
+                    setQuestion();
                 }
-
-                setQuestion();
             }
         });
     }
