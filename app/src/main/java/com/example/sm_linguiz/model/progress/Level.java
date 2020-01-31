@@ -5,10 +5,12 @@ import com.example.sm_linguiz.database.Word;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+
 // todo shouldn't be static class, used in e. g. "Level.A2"
 public class Level implements Serializable {
     String name;
     HashMap<Word, Integer> map;
+    public static String[] levels = new String[]{"A1", "A2", "B1", "B2", "C1", "C2"};
 
     public Level(String name) {
         this.name = name;

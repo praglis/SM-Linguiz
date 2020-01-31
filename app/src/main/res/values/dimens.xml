@@ -6,6 +6,6 @@
     <dimen name="text_size_big">24sp</dimen>
     <dimen name="info_horizontal_margin">16sp</dimen>
     <dimen name="info_bottom_margin">64sp</dimen>
-    <dimen name="answer_button_width">128dp</dimen>
+    <dimen name="answer_button_width">310dp</dimen>
     <dimen name="answer_button_height">128dp</dimen>
 </resources>

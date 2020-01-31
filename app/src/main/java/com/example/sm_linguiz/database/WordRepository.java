@@ -9,6 +9,7 @@ import java.util.List;
 public class WordRepository {
     private WordDao wordDao;
     private LiveData<List<Word>> words;
+    private LiveData<Integer> skillSum;
 
     public WordRepository(Application application) {
         WordDatabase database = WordDatabase.getDatabase(application);
@@ -25,6 +26,12 @@ public class WordRepository {
         words = wordDao.findWordsFromLevel(level);
         return words;
     }
+
+    public LiveData<Integer> getPointsForLevel(String level){
+        skillSum = wordDao.getPointsForLevel(level);
+        return skillSum;
+    }
+
 
     void insert(final Word word) {
         WordDatabase.databaseWriteExecutor.execute(new Runnable() {

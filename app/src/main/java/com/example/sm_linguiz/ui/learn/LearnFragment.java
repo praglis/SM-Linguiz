@@ -24,6 +24,7 @@ import static com.example.sm_linguiz.ui.MainActivity.LEARN_OR_TEST;
 public class LearnFragment extends Fragment {
     public static final String LEARN_LENGTH = "learnLength";
     EditText learnLengthEditText;
+    TextView a1SkillPointsText;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +46,9 @@ public class LearnFragment extends Fragment {
         super.onStart();
         learnLengthEditText = getView().findViewById(R.id.learn_length_edit);
         learnLengthEditText.setText(R.string.defaultLearnLength);
+
+//        a1SkillPointsText = getView().findViewById(R.id.skill_points_a1);
+//        a1SkillPointsText.setText(MainActivity.skillSums[0]);
     }
 
     @Override

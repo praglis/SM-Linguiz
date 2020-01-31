@@ -30,4 +30,7 @@ public interface WordDao {
 
     @Query("SELECT * FROM word WHERE level LIKE :level ORDER BY skill")
     public LiveData<List<Word>> findWordsFromLevel(String level);
+
+    @Query("SELECT SUM(skill) FROM word WHERE level LIKE :level")
+    public LiveData<Integer> getPointsForLevel(String level);
 }

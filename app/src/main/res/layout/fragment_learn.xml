@@ -22,7 +22,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="@dimen/text_size_big" />
 
     <EditText
         android:id="@+id/learn_length_edit"
@@ -32,4 +32,14 @@
         android:layout_marginTop="@dimen/activity_vertical_margin_small"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:inputType="numberSigned" />
+
+    <TextView
+        android:id="@+id/skill_points_a1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:textAlignment="center"
+        android:textSize="@dimen/text_size_big" />
 </LinearLayout>
