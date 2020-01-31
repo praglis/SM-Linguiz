@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-// todo shouldn't be static class, used in e. g. "Level.A2"
 public class Level implements Serializable {
     String name;
     HashMap<Word, Integer> map;
@@ -16,18 +15,6 @@ public class Level implements Serializable {
         this.name = name;
         map = new LinkedHashMap<>();
     }
-
-//    public String getName() {
-//        return name;
-//    }
-
-//    public HashMap getMap() {
-//        return map;
-//    }
-//
-//    public void setMap(LinkedHashMap<Word, Integer> map) {
-//        this.map = map;
-//    }
 
     public int toInteger() {
         char letter = name.charAt(0);

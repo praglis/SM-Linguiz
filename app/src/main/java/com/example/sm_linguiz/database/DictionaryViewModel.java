@@ -41,30 +41,4 @@ public class DictionaryViewModel extends AndroidViewModel {
     public void delete(Word word) {
         wordRepository.delete(word);
     }
-
-//    @Override
-//    public Iterator<Word> iterator() {
-//        return new Iterator<Word>() {
-//            private int before = 0;
-//
-//            @Override
-//            public boolean hasNext() {
-//                return before < wordList.size();
-//            }
-//
-//            @Override
-//            public Word next() {
-//                return wordList.get(before++);
-//            }
-//
-//            @Override
-//            public void remove() {
-//                for (int i = 0; i <= wordList.size(); i++) {
-//                    if (this.before - 1 == i) {
-//                        wordList.remove(i);
-//                    }
-//                }
-//            }
-//        };
-//    }
 }

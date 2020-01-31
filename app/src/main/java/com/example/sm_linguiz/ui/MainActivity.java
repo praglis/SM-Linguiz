@@ -10,16 +10,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.sm_linguiz.R;
-import com.example.sm_linguiz.database.DictionaryViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String LEARN_OR_TEST = "learn_or_test";
-
-    public static int[] skillSums = new int[6];
-    private DictionaryViewModel dictionaryViewModel;
-    private int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +29,5 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
-//        for (String level : Level.levels) {
-//            dictionaryViewModel = new ViewModelProvider(this).get(DictionaryViewModel.class);
-//            dictionaryViewModel.getSkillSumByLevel(level).observe((LifecycleOwner) this, new Observer<Integer>() {
-//                @Override
-//                public void onChanged(@Nullable final Integer skillSum) {
-//                    Log.d("MainActivity", "onCreate->onChange[PR]");
-//                    if (skillSum != null) skillSums[i] += skillSum;
-//                }
-//            });
-//            i++;
-//        }
     }
 }

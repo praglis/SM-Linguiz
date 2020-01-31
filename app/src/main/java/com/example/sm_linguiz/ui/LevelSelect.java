@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import com.example.sm_linguiz.R;
 import com.example.sm_linguiz.database.DictionaryViewModel;
 import com.example.sm_linguiz.database.Word;
-import com.example.sm_linguiz.model.proxy.DictionaryProxy;
+import com.example.sm_linguiz.model.proxy.Dictionary;
 import com.example.sm_linguiz.model.quiz.LearnQuiz;
 import com.example.sm_linguiz.model.quiz.Quiz;
 import com.example.sm_linguiz.model.quiz.TestQuiz;
@@ -37,7 +37,7 @@ public class LevelSelect extends AppCompatActivity {
     private Button backButton;
     private Button[] levelButtons;
     private DictionaryViewModel dictionaryViewModel;
-    private DictionaryProxy dictionaryProxy;
+    private Dictionary dictionary;
     private static final int QUESTION_COUNT = 10;
     private Context context;
     static boolean isDataLoaded = false;
@@ -93,7 +93,7 @@ public class LevelSelect extends AppCompatActivity {
                     String selectedLevel = (String) ((Button) view).getText();
 
                     boolean learnOrTest = getIntent().getBooleanExtra(LEARN_OR_TEST, true);
-                    dictionaryProxy = new DictionaryProxy(selectedLevel);
+                    dictionary = new Dictionary(selectedLevel);
 
 
                     dictionaryViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(DictionaryViewModel.class);
@@ -102,9 +102,9 @@ public class LevelSelect extends AppCompatActivity {
                         public void onChanged(@Nullable final List<Word> words) {
                             Log.d("LevelSelect", "onCreate->onClick(answer)->onChange[PR]");
 
-                            dictionaryProxy.updateWordList(words);
+                            dictionary.updateWordList(words);
 
-                            if (dictionaryProxy.getWordList().size() < STANDARD_DICTIONARY_SIZE || isDataLoaded)
+                            if (dictionary.getWordList().size() < STANDARD_DICTIONARY_SIZE || isDataLoaded)
                                 return;
                             isDataLoaded = true;
                             Log.d("LevelSelect", "after if 290[PR]");
@@ -112,7 +112,7 @@ public class LevelSelect extends AppCompatActivity {
                             if (learnOrTest) {
                                 Log.d("LevelSelect", "after if learnOrTest == true[PR]");
                                 int questionCount = getIntent().getIntExtra(LEARN_LENGTH, 10);
-                                quiz = new LearnQuiz(dictionaryProxy, questionCount);
+                                quiz = new LearnQuiz(dictionary, questionCount);
                                 if (!isQuestionLoaded) {
                                     Log.d("LevelSelect", "after if isQuestionLoaded != true[PR]");
                                     isQuestionLoaded = true;
@@ -123,7 +123,7 @@ public class LevelSelect extends AppCompatActivity {
                             } else {
                                 Log.d("LevelSelect", "after if learnOrTest == false[PR]");
                                 int questionCount = getIntent().getIntExtra(TEST_LENGTH, 10);
-                                quiz = new TestQuiz(dictionaryProxy, questionCount);
+                                quiz = new TestQuiz(dictionary, questionCount);
                                 if (!isQuestionLoaded) {
                                     Log.d("LevelSelect", "after if isQuestionLoaded != true[PR]");
 

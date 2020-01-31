@@ -36,9 +36,6 @@ public class LearnFragment extends Fragment {
         super.onStart();
         learnLengthEditText = getView().findViewById(R.id.learn_length_edit);
         learnLengthEditText.setText(R.string.defaultLearnLength);
-
-//        a1SkillPointsText = getView().findViewById(R.id.skill_points_a1);
-//        a1SkillPointsText.setText(MainActivity.skillSums[0]);
     }
 
     @Override

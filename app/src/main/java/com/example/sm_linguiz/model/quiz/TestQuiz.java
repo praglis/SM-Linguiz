@@ -2,7 +2,7 @@ package com.example.sm_linguiz.model.quiz;
 
 import com.example.sm_linguiz.database.Word;
 import com.example.sm_linguiz.model.builder.TestQuizBuilder;
-import com.example.sm_linguiz.model.proxy.DictionaryProxy;
+import com.example.sm_linguiz.model.proxy.Dictionary;
 import com.example.sm_linguiz.model.question.Question;
 
 import java.util.LinkedList;
@@ -10,52 +10,17 @@ import java.util.List;
 
 public class TestQuiz extends Quiz {
     private int score;
-    private boolean[] answerCorrectness;// todo use dis
+    private boolean[] answerCorrectness;
 
-    public TestQuiz(DictionaryProxy dictionaryProxy, int questionCount) {
-        super(dictionaryProxy);
+    public TestQuiz(Dictionary dictionary, int questionCount) {
+        super(dictionary);
         score = 0;
 
-        TestQuizBuilder testQuizBuilder = new TestQuizBuilder(this.dictionaryProxy);
+        TestQuizBuilder testQuizBuilder = new TestQuizBuilder(this.dictionary);
         testQuizBuilder.createQuestions(questionCount);
         this.questions = new LinkedList<>(testQuizBuilder.getQuestions());
         answerCorrectness = new boolean[questionCount];
     }
-
-//    public void updateScore() throws FileNotFoundException {
-//        File plik = new File(Objects.requireNonNull(MainLauncher.class.getClassLoader().getResource("ranking")).getFile());
-//        Scanner odczyt = new Scanner(plik);
-//
-//        String[] rankingLevel = new String[6];
-//        String[] rankingScore = new String[6];
-//
-//        String helpLevel;
-//        String helpScore;
-//
-//        for (int i = 0; i < 6; i++) {
-//            if (odczyt.hasNextLine()) {
-//                helpLevel = odczyt.nextLine();
-//                helpScore = odczyt.nextLine();
-//                if (helpLevel.equals(dictionaryProxy.getLevel().getName()) && Integer.parseInt(helpScore) < score) {
-//                    helpLevel = dictionaryProxy.getLevel().getName();
-//                    helpScore = Integer.toString(score);
-//                }
-//                rankingLevel[i] = helpLevel;
-//                rankingScore[i] = helpScore;
-//            }
-//        }
-//        odczyt.close();
-//
-//        PrintWriter zapis = new PrintWriter(plik);
-//
-//        for (int i = 0; i < 6; i++) {
-//            zapis.println(rankingLevel[i]);
-//            zapis.println(rankingScore[i]);
-//        }
-//        zapis.close();
-//
-//    } //todo
-
 
     public boolean[] getAnswerCorrectness() {
         return answerCorrectness;

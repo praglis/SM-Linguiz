@@ -8,4 +8,5 @@
     <dimen name="info_bottom_margin">64sp</dimen>
     <dimen name="answer_button_width">310dp</dimen>
     <dimen name="answer_button_height">128dp</dimen>
+    <dimen name="input_horizontal_margin">128dp</dimen>
 </resources>

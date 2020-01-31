@@ -1,7 +1,7 @@
 package com.example.sm_linguiz.model.builder;
 
 import com.example.sm_linguiz.model.progress.Progress;
-import com.example.sm_linguiz.model.proxy.DictionaryProxy;
+import com.example.sm_linguiz.model.proxy.Dictionary;
 import com.example.sm_linguiz.model.question.Question;
 
 import java.util.LinkedList;
@@ -9,12 +9,12 @@ import java.util.List;
 
 abstract class QuizBuilder {
     LinkedList<Question> questions;
-    protected DictionaryProxy dictionaryProxy;
+    protected Dictionary dictionary;
     Progress progress;
 
-    QuizBuilder(DictionaryProxy dictionaryProxy) {
+    QuizBuilder(Dictionary dictionary) {
         this.questions = new LinkedList<>();
-        this.dictionaryProxy = dictionaryProxy;
+        this.dictionary = dictionary;
         this.progress = Progress.getInstance();
     }
 

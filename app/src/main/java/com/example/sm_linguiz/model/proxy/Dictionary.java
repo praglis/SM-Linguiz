@@ -8,11 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class DictionaryProxy implements Serializable {
+public class Dictionary implements Serializable {
     private String level;
     private List<Word> wordList;
 
-    public DictionaryProxy(String level) {
+    public Dictionary(String level) {
         this.level = level;
         this.wordList = new LinkedList<>();
     }
@@ -49,8 +49,4 @@ public class DictionaryProxy implements Serializable {
         this.wordList.addAll(wordList);
     }
 
-//    public Iterator<Word> iterator(){
-//        if (this.dictionaryViewModel == null) this.dictionaryViewModel = new DictionaryViewModel(this.level);
-//        return dictionaryViewModel.iterator();
-//    }
 }

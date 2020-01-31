@@ -28,7 +28,7 @@ public abstract class WordDatabase extends RoomDatabase {
 
             databaseWriteExecutor.execute(new Runnable() {
                 @Override
-                public void run() {
+                public void run() {// PONIŻSZY ZAKOMENTOWANY KOD SŁUŻY DO WCZYTANIA SŁÓWEK Z ASSETS DO BAZY DANYCH - WYSTARCZY WYKONAĆ RAZ
                     WordDao dao = INSTANCE.wordDao();
 //                    dao.deleteAll();
 //

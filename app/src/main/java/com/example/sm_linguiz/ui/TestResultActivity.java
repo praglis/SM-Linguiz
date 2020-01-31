@@ -108,8 +108,6 @@ public class TestResultActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull ResultHolder holder, int position) {
             if (results != null) {
                 Question question = testQuiz.getQuestions().get(position);
-//                Word correctWord = results.get(position);
-//                String userAnswer = testQuiz.getUserAnswer(position);
                 boolean isCorrect = testQuiz.getAnswerCorrectness()[position];
 
                 holder.bind(isCorrect, question);

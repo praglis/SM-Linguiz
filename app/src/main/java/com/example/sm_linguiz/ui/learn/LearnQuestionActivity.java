@@ -90,7 +90,6 @@ public class LearnQuestionActivity extends QuestionActivity {
         mAccelLast = SensorManager.GRAVITY_EARTH;
 
         hasUserAnswered = false;
-        //dictionaryViewModel = (DictionaryViewModel) getIntent().getSerializableExtra(DICTIONARY_VIEW_MODEL);
         dictionaryViewModel = new ViewModelProvider(this).get(DictionaryViewModel.class);
 
 
